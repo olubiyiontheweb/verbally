@@ -8,9 +8,9 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
+# gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 4.0'
+# gem 'webpacker', '~> 4.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -32,9 +32,9 @@ group :development, :test do
 end
 
 group :development do
+  gem 'listen', '~> 3.2'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -54,12 +54,15 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'aws-sdk-dynamodb' #- our database
 gem 'aws-sdk-s3' # For storage
 gem 'aws-sdk-sesv2' # Amazon SMTP mails
-gem 'devise' # for authentication
-gem 'devise-dynamoid', '~> 0.1.0' # to support dynamoid orm and devise auth gem
-gem 'dynamoid' # Object relational mapping for Dynamodb
-gem 'figaro' # for environment variables
+gem 'devise'
+gem 'devise-dynamoid' # support Dynamoid generator with devise
+gem 'dynamoid' # ORM for AWS Dynamodb
+gem 'dynamoid-orm-adapter'
+gem 'dynamoid-paperclip' # to support file uploads
+gem 'figaro' # to support environment variables
+gem 'google-cloud-text_to_speech', '~> 1.1', '>= 1.1.1'
 
 group :development, :test do
-  gem 'solargraph'
   gem 'mailcatcher'
+  gem 'solargraph'
 end

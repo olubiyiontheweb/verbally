@@ -29,12 +29,36 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  # config.active_storage.service = :local
+  # config.active_storage.service = ENV.fetch('active_storage_service').to_sym
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
+
+  mail_delivery_method = (ENV.fetch('mail_delivery_method').present? ? ENV['mail_delivery_method'].to_sym : :sendmail)
+
+  config.action_mailer.delivery_method = mail_delivery_method
+
+  if mail_delivery_method == :smtp
+    ActionMailer::Base.smtp_settings = {
+      address: ENV.fetch('smtp_email_address'),
+      port: ENV.fetch('smtp_email_port'),
+      domain: ENV.fetch('smtp_email_domain'),
+      user_name: ENV.fetch('smtp_email_user_name'),
+      password: ENV.fetch('smtp_email_password'),
+      authentication: 'plain',
+      enable_starttls_auto: true
+    }
+  end
+
+  # Sendmail is used for some mails (e.g. Newsletter) so configure it even when smtp is the main method
+  ActionMailer::Base.sendmail_settings = {
+    location: '/usr/sbin/sendmail',
+    arguments: '-i -t'
+  }
+
+  ActionMailer::Base.perform_deliveries = true # the "deliver_*" methods are available
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

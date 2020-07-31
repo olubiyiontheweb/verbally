@@ -7,7 +7,7 @@ require 'rails'
 require 'active_model/railtie'
 require 'active_job/railtie'
 # require "active_record/railtie"
-# require "active_storage/engine"
+# require 'active_storage/engine'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
@@ -31,5 +31,9 @@ module Verbally
 
     # App wide API only configuration
     config.api_only = true
+
+    config.generators do |g|
+      g.orm :dynamoid
+    end
   end
 end
