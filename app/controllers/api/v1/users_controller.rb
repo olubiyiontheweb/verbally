@@ -5,6 +5,6 @@ class Api::V1::UsersController < ApplicationController
   def show
     # search users by username
     @user = User.where(username: params[:id])
-    render json: @user
+    # render json: @user
   end
 end

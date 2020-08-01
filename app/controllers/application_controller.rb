@@ -4,6 +4,10 @@ class ApplicationController < ActionController::API
   # protect against mass asignment attack during app interactions
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def status
+    render json: { data: 'ok' }
+  end
+
   protected
 
   def configure_permitted_parameters
