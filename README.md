@@ -27,9 +27,16 @@ Visit the link below for instructions on how to install Amazon dynamodb on you l
 >https://garywoodfine.com/how-to-install-dynamodb-on-local-ubuntu-development/
 
 You need to create an application.yml file for the app configurations, it's not pushed with the app for security reasons.
-> nano config/application.yml
 
-chat me up for the content of application.yml file
+> bundle exec figaro install
+
+This creates a commented config/application.yml file and adds it to your .gitignore
+
+set the following in the file
+
+aws_dynamodb_region: "write any region you like. Lol"
+aws_dynamodb_endpoint: "your dynamodb endpoint. usually http://localhost:8000"
+aws_dynamoid_namespace: "this is optional, you can set a prefix for all your database tables"
 
 To start the server type
 
