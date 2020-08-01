@@ -1,9 +1,6 @@
 class ApplicationController < ActionController::API
   # API ony application controller
 
-  # prevent against forgery - Cross-Site Request Forgery (CSRF)
-  # protect_from_forgery prepend: true
-
   # protect against mass asignment attack during app interactions
   before_action :configure_permitted_parameters, if: :devise_controller?
 

@@ -3,7 +3,8 @@ class Api::V1::UsersController < ApplicationController
   # before_action :authenticate_user!
 
   def show
-    @user = User.find(params[:user_id])
+    # search users by username
+    @user = User.where(username: params[:id])
     render json: @user
   end
 end

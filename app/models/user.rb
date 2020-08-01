@@ -4,9 +4,8 @@ class User
   include Dynamoid::Document
 
   # specifying table name for this model, it'll be created if it does not exist yet
-  table name: :creators, hash_key: :user_id, range_key: :id, read_capacity: 5, write_capacity: 5
-  field :id, :integer
-  field :user_id, :number
+  table name: :creators, key: :id, read_capacity: 5, write_capacity: 5
+  field :id
   field :first_name, :string
   field :last_name, :string
   field :email, :string
@@ -22,6 +21,7 @@ class User
   field :last_sign_in_ip, :number
 
   global_secondary_index hash_key: :email, projected_attributes: :all
+  global_secondary_index hash_key: :username, projected_attributes: :all
   global_secondary_index hash_key: :reset_password_token, projected_attributes: :all
 
   # to supports password hashing, user signup, password resets, email confirmations and login counts
