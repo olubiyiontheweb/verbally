@@ -23,11 +23,21 @@ After successfully installing ruby type these commands
 
 > bundle install
 
+Visit the link below for instructions on how to install Amazon dynamodb on you localdb
+>https://garywoodfine.com/how-to-install-dynamodb-on-local-ubuntu-development/
+
+You need to create an application.yml file for the app configurations, it's not pushed with the app for security reasons.
+> nano config/application.yml
+
+chat me up for the content of application.yml file
+
 To start the server type
 
 > rails s
 
 It's live at http://localhost:3000
+
+Users can be searched by their usernames
 
 Here are currently available API V1 routes
 
