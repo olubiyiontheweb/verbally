@@ -1,11 +1,11 @@
-#Verbally
+# Verbally
 
 A productivity tool that helps creators and marketers create audio voice overs, ads or stories in their native or preferred voice.
 
 
 
 
-###To setup this app on your local system
+### To setup this app on your local system
 
 Install Ruby 2.7.0
 
