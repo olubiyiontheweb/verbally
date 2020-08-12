@@ -11,6 +11,8 @@ class User
   field :email, :string
   field :username, :string
   field :encrypted_password, :string
+  field :accept_terms_condition, :boolean, store_as_native_boolean: false
+  field :date_of_birth, :date, store_as_string: true
   field :reset_password_token, :string
   field :reset_password_sent_at, :datetime
   field :remember_created_at, :datetime

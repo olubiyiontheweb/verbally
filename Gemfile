@@ -61,7 +61,8 @@ gem 'dynamoid-orm-adapter'
 gem 'dynamoid-paperclip' # to support file uploads
 gem 'figaro' # to support environment variables
 gem 'google-cloud-text_to_speech', '~> 1.1', '>= 1.1.1'
-gem 'rack-cors'
+gem 'rack-cors'  # to support cross application transfer of data
+
 
 group :development, :test do
   gem 'mailcatcher'
