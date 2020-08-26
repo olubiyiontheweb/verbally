@@ -56,13 +56,13 @@ gem 'aws-sdk-s3' # For storage
 gem 'aws-sdk-sesv2' # Amazon SMTP mails
 gem 'devise'
 gem 'devise-dynamoid' # support Dynamoid generator with devise
+gem 'devise-encryptable'
 gem 'dynamoid' # ORM for AWS Dynamodb
 gem 'dynamoid-orm-adapter'
 gem 'dynamoid-paperclip' # to support file uploads
 gem 'figaro' # to support environment variables
 gem 'google-cloud-text_to_speech', '~> 1.1', '>= 1.1.1'
-gem 'rack-cors'  # to support cross application transfer of data
-
+gem 'rack-cors' # to support cross application transfer of data
 
 group :development, :test do
   gem 'mailcatcher'
