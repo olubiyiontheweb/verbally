@@ -1,10 +1,10 @@
 class Api::V1::RegistrationsController < Devise::RegistrationsController
   wrap_parameters User
   before_action :ensure_params_exist, only: :create
+  before_action :check_unique_values
 
   def create
     user = User.new(user_params)
-    # User.error.add('Username exists in database') unless User.exists?(username: params[:username])
     if user.save
       render json: {
         messages: 'Sign Up Successfully',
@@ -34,6 +34,18 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
 
     render json: {
       messages: 'Missing Params',
+      is_success: false,
+      data: {}
+    }, status: :bad_request
+  end
+
+  def check_unique_values
+    user_det = User.new(user_params)
+    return unless User.find_by_username(user_det.username).present? || User.find_by_email(user_det.email).present?
+
+    user_det.errors.add(:base, :username_or_email_exists, message: 'Some parameters (e.g username or email) exists in the database')
+    render json: {
+      messages: 'Some parameters (e.g username or email) exists in the database',
       is_success: false,
       data: {}
     }, status: :bad_request
