@@ -57,6 +57,7 @@ gem 'aws-sdk-sesv2' # Amazon SMTP mails
 gem 'devise'
 gem 'devise-dynamoid' # support Dynamoid generator with devise
 gem 'devise-encryptable'
+gem 'dynamodb-migration'
 gem 'dynamoid' # ORM for AWS Dynamodb
 gem 'dynamoid-orm-adapter'
 gem 'dynamoid-paperclip' # to support file uploads

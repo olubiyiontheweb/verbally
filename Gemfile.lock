@@ -115,6 +115,8 @@ GEM
       orm_adapter-dynamoid (~> 0.0.2)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
+    dynamodb-migration (0.8.0)
+      aws-sdk-dynamodb (~> 1)
     dynamoid (3.6.0)
       activemodel (>= 4)
       aws-sdk-dynamodb (~> 1.0)
@@ -387,6 +389,7 @@ DEPENDENCIES
   devise
   devise-dynamoid
   devise-encryptable
+  dynamodb-migration
   dynamoid
   dynamoid-orm-adapter
   dynamoid-paperclip

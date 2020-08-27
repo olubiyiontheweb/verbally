@@ -4,6 +4,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
 
   def create
     user = User.new(user_params)
+    # User.error.add('Username exists in database') unless User.exists?(username: params[:username])
     if user.save
       render json: {
         messages: 'Sign Up Successfully',

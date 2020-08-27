@@ -38,6 +38,10 @@ aws_dynamodb_region: "write any region you like. Lol"
 aws_dynamodb_endpoint: "your dynamodb endpoint. usually http://localhost:8000"
 aws_dynamoid_namespace: "this is optional, you can set a prefix for all your database tables"
 
+Run this to create all tables 
+
+>rake dynamoid:create_tables
+
 To start the server type
 
 > rails s
