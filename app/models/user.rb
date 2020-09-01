@@ -40,10 +40,7 @@ class User
          :trackable, :encryptable, encryptor: :restful_authentication_sha1
   #  :rememberable, :lockable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
 
-  # remember to fix uniqueness
   validates_presence_of :username
-  # validates_uniqueness_of :username, message: 'Sorry, this username has already been used!'
-  # validates_uniqueness_of :email, message: 'Sorry, this email is already registered!'
   validates_confirmation_of :password
   validates_format_of :email, with: /@/
 

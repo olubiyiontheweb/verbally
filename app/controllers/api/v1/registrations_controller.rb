@@ -42,7 +42,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
   def check_unique_values
     user_det = User.new(user_params)
     return unless User.find_by_username(user_det.username).present? || User.find_by_email(user_det.email).present?
-
+    
     user_det.errors.add(:base, :username_or_email_exists, message: 'Some parameters (e.g username or email) exists in the database')
     render json: {
       messages: 'Some parameters (e.g username or email) exists in the database',
