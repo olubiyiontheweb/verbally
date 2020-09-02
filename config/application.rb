@@ -36,7 +36,7 @@ module Verbally
       g.orm :dynamoid
     end
 
-    config.middleware.insert_before 0, "Rack::Cors" do
+    config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '/^(.*\.|)verbally\.com$/', '127.0.0.1'
         resource(
