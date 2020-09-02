@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar class="ion-no-padding">
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/front"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title slot="start">
+      Signup
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        Just few steps aways a way from having an acount
+      </ion-col>
+    </ion-row>
+
+  </ion-grid> -->
+
+  <ion-card>
+    <ion-card-content>
+
+      <form [formGroup]="registerForm">
+
+        <ion-item lines="none">
+          <ion-label position="floating">First name:</ion-label>
+          <ion-input formControlName="firstName"
+            [ngClass]="{ 'is-invalid': submitted && getFormControl.firstName.errors }">
+          </ion-input>
+          <div *ngIf="submitted && getFormControl.firstName.errors" class="danger">
+            <div *ngIf="getFormControl.firstName.errors.required" color="danger">First Name is required</div>
+          </div>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Last name:</ion-label>
+          <ion-input formControlName="lastName"></ion-input>
+          <div *ngIf="submitted && getFormControl.lastName.errors" class="danger">
+            <div *ngIf="getFormControl.lastName.errors.required" color="danger">lastName is required</div>
+          </div>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Email:</ion-label>
+          <ion-input formControlName="emailAddress"></ion-input>
+          <div *ngIf="submitted && getFormControl.emailAddress.errors" class="danger">
+            <div
+              *ngIf="getFormControl.emailAddress.errors.required || getFormControl.emailAddress.errors.pattern.requiredPattern"
+              color="danger">emailAddress is required</div>
+          </div>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Username:</ion-label>
+          <ion-input formControlName="userName"></ion-input>
+          <div *ngIf="submitted && getFormControl.userName.errors" class="danger">
+            <div *ngIf="getFormControl.userName.errors.required" color="danger">Username is required</div>
+          </div>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Password:</ion-label>
+          <ion-input formControlName="password"></ion-input>
+          <div *ngIf="submitted && getFormControl.password.errors" class="danger">
+            <div *ngIf="getFormControl.password.errors.required" color="danger">Password is required</div>
+          </div>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Confirm Password:</ion-label>
+          <ion-input formControlName="confirmPassword"></ion-input>
+          <div *ngIf="submitted && getFormControl.confirmPassword.errors" class="danger">
+            <div *ngIf="getFormControl.confirmPassword.errors.required" color="danger">Password is required</div>
+          </div>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Date of birth:</ion-label>
+          <ion-datetime formControlName="dob" displayFormat="DD/MM/YYYY">
+          </ion-datetime>
+          <div *ngIf="submitted && getFormControl.dob.errors" class="danger">
+            <div *ngIf="getFormControl.dob.errors.required">Date of birth is required</div>
+          </div>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label>Accept terms and conditions:</ion-label>
+          <ion-checkbox formControlName="termsAndCondition"></ion-checkbox>
+          <div *ngIf="submitted && getFormControl.termsAndCondition.errors" class="danger">
+            <div *ngIf="getFormControl.termsAndCondition.errors.required">Terms and conditions is
+              required</div>
+          </div>
+        </ion-item>
+
+
+        <ion-row>
+          <ion-col class="ion-float-left">
+            <ion-button color="success" class="btn-store" expand="block" (click)="registerUser()">
+              Signup
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-float-left">
+            Already have an account? <a routerLink="/tabs/sigin">Signin</a>
+          </ion-col>
+        </ion-row>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

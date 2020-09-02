@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar class="ion-no-padding">
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/front"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title slot="start">
+      Signin
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <!-- Inputs with labels -->
+      <ion-item lines="none">
+        <ion-label position="floating">Email/Username:</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Password:</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+
+      <ion-row>
+        <ion-col>
+          <ion-button color="success" expand="block" class="btn-store">
+            Signin
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          No account yet? <a routerLink="/tabs/register">Signup</a>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,26 @@
+ion-slides {
+    //height: 30%;
+}
+
+.img-wrap {
+    position: relative;
+
+    .img-txt {
+        position: absolute;
+        bottom: 0;
+        color: white;
+        background-color: rgb(29, 87, 18);
+        padding: 0 10px;
+        border-radius: 10px;
+
+        h1 {
+            margin: 0;
+        }
+    }
+}
+
+.topic-txt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

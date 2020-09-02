@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col size="10">
+        <!-- Searchbar with cancel button always shown -->
+        <ion-searchbar showCancelButton="focus"></ion-searchbar>
+      </ion-col>
+
+      <ion-col size="2">
+        <!-- fab placed to the top end -->
+        <ion-fab vertical="center" horizontal="end" edge>
+          <ion-fab-button color="success-contrast">
+            <ion-icon name="heart-circle-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </ion-col>
+    </ion-row>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide *ngFor="let bannerImg of bannerImages">
+      <div class="img-wrap">
+        <ion-img src="{{bannerImg.url}}" alt="{{bannerImg.title}}"></ion-img>
+        <div class="img-txt">
+          <h1>{{bannerImg.title}}</h1>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid>
+
+    <ion-row *ngFor="let item of itemCatergory; let i = index">
+      <ion-col class="ion-no-padding">
+        <div class="topic-txt">
+          #{{itemCatergory[i].header }}
+          <p>
+            See All
+          </p>
+        </div>
+      </ion-col>
+
+      <ion-col>
+        <ion-slides [options]="slideOptsTwo">
+          <ion-slide *ngFor="let card of itemCatergory[i].id;"
+            style="width: 150px; height: 100px; border: 2px solid #f8f8f8">
+            <ion-col>
+              <ion-label>{{ card.title }}</ion-label>
+              <ion-img style="pointer-events:none" src={{card.url}}></ion-img>
+            </ion-col>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

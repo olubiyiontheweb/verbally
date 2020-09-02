@@ -1,0 +1,7 @@
+{
+  "name": "VerballyClient",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

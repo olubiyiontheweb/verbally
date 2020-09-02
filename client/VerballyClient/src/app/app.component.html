@@ -1,0 +1,48 @@
+<ion-app>
+
+  <ion-menu side="start" menuId="main" contentId="verballyMenu">
+    <ion-header>
+      <ion-toolbar>
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-avatar>
+
+          <ion-label class="ion-text-wrap">
+
+            <ion-text color="primary">
+              <h3>Username</h3>
+            </ion-text>
+
+            <div class="ion-text-flex">
+              <ion-text color="secondary">
+                <p>View Profile</p>
+              </ion-text>
+
+              <ion-text color="secondary">
+                <p>Settings</p>
+              </ion-text>
+            </div>
+
+          </ion-label>
+
+        </ion-item>
+
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item lines="none">
+          <ion-label>
+            Recent
+          </ion-label>
+
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+
+  <ion-router-outlet id="verballyMenu" main></ion-router-outlet>
+</ion-app>
