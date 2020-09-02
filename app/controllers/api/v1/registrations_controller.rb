@@ -25,7 +25,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
   def user_params
     # devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name password password_confirmation
     #                                                     email username date_of_birth accept_terms_condition])
-    params.require(:user).permit(:email, :password, :password_confirmation, :username, :first_name,
+    params.require(:user).permit(:email, :password, :password_confirmation, :username, :first_name, :last_name,
                                  :date_of_birth, :accept_terms_condition)
   end
 

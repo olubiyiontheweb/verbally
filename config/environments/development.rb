@@ -88,4 +88,6 @@ Rails.application.configure do
 
   # Api only configuration
   config.debug_exception_response_format = :default
+
+  #config.hosts.clear
 end

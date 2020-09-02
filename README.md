@@ -48,6 +48,14 @@ To start the server type
 
 It's live at http://localhost:3000
 
+Open a new terminal and run the following commands
+
+>cd client/VerballyClient/
+
+>ionic serve -l
+
+Client application is live at http://localhost:8100
+
 Users can be searched by their usernames
 
 Here are currently available API V1 routes
