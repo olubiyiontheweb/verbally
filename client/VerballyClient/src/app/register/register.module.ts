@@ -8,6 +8,8 @@ import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
 
+import { ObjectFilterPipe } from '../object-filter.pipe';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +18,6 @@ import { RegisterPage } from './register.page';
     IonicModule,
     RegisterPageRoutingModule
   ],
-  declarations: [RegisterPage]
+  declarations: [RegisterPage, ObjectFilterPipe]
 })
 export class RegisterPageModule { }

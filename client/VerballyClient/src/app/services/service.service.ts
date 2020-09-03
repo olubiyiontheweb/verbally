@@ -8,7 +8,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 })
 export class ServiceService {
 
-  private API_URL: string = "http://127.0.0.1:3000";
+  private API_URL: string = "http://127.0.0.1:3000/";
 
   constructor(private http: HttpClient) { }
 
@@ -32,12 +32,12 @@ export class ServiceService {
   };
 
   registerUsers(object) {
-    let endpoint = "/api/v1/users";
+    let endpoint = "api/v1/users";
     return this.http
       .post(this.API_URL + endpoint, object)
       .pipe(
         map(this.extractData),
-        catchError(this.handleError<any>(endpoint))
+        catchError(this.handleError<any>("registerUsers"))
       )
   }
 

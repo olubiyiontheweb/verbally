@@ -6,12 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ObjectFilterPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
-    let keys = [];
-    for (let key in value) {
-      keys.push(value[key]);
-    }
-    return keys;
-    //return null;
+    let date = new Date(value).toLocaleDateString();
+    console.log(date);
+    return date;
   }
 
 }

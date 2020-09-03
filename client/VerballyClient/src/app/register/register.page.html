@@ -30,38 +30,29 @@
       <form [formGroup]="registerForm">
 
         <ion-item lines="none">
-          <ion-label position="floating">First name:</ion-label>
-          <ion-input formControlName="firstName"
-            [ngClass]="{ 'is-invalid': submitted && getFormControl.firstName.errors }">
+          <ion-label position="floating">Full name:</ion-label>
+          <ion-input formControlName="first_name"
+            [ngClass]="{ 'is-invalid': submitted && getFormControl.first_name.errors }">
           </ion-input>
-          <div *ngIf="submitted && getFormControl.firstName.errors" class="danger">
-            <div *ngIf="getFormControl.firstName.errors.required" color="danger">First Name is required</div>
-          </div>
-        </ion-item>
-
-        <ion-item lines="none">
-          <ion-label position="floating">Last name:</ion-label>
-          <ion-input formControlName="lastName"></ion-input>
-          <div *ngIf="submitted && getFormControl.lastName.errors" class="danger">
-            <div *ngIf="getFormControl.lastName.errors.required" color="danger">lastName is required</div>
+          <div *ngIf="submitted && getFormControl.first_name.errors" class="danger">
+            <div *ngIf="getFormControl.first_name.errors.required" color="danger">First Name is required</div>
           </div>
         </ion-item>
 
         <ion-item lines="none">
           <ion-label position="floating">Email:</ion-label>
-          <ion-input formControlName="emailAddress"></ion-input>
-          <div *ngIf="submitted && getFormControl.emailAddress.errors" class="danger">
-            <div
-              *ngIf="getFormControl.emailAddress.errors.required || getFormControl.emailAddress.errors.pattern.requiredPattern"
-              color="danger">emailAddress is required</div>
+          <ion-input formControlName="email"></ion-input>
+          <div *ngIf="submitted && getFormControl.email.errors" class="danger">
+            <div *ngIf="getFormControl.email.errors.required || getFormControl.email.errors.pattern.requiredPattern"
+              color="danger">email is required</div>
           </div>
         </ion-item>
 
         <ion-item lines="none">
           <ion-label position="floating">Username:</ion-label>
-          <ion-input formControlName="userName"></ion-input>
-          <div *ngIf="submitted && getFormControl.userName.errors" class="danger">
-            <div *ngIf="getFormControl.userName.errors.required" color="danger">Username is required</div>
+          <ion-input formControlName="username"></ion-input>
+          <div *ngIf="submitted && getFormControl.username.errors" class="danger">
+            <div *ngIf="getFormControl.username.errors.required" color="danger">Username is required</div>
           </div>
         </ion-item>
 
@@ -75,26 +66,28 @@
 
         <ion-item lines="none">
           <ion-label position="floating">Confirm Password:</ion-label>
-          <ion-input formControlName="confirmPassword"></ion-input>
-          <div *ngIf="submitted && getFormControl.confirmPassword.errors" class="danger">
-            <div *ngIf="getFormControl.confirmPassword.errors.required" color="danger">Password is required</div>
+          <ion-input formControlName="password_confirmation"></ion-input>
+          <div *ngIf="submitted && getFormControl.password_confirmation.errors" class="danger">
+            <div *ngIf="getFormControl.password_confirmation.errors.required" color="danger">Confirm Password is
+              required</div>
           </div>
         </ion-item>
 
         <ion-item lines="none">
           <ion-label position="floating">Date of birth:</ion-label>
-          <ion-datetime formControlName="dob" displayFormat="DD/MM/YYYY">
+          <ion-datetime formControlName="date_of_birth" displayFormat="DD/MM/YYYY" (ionBlur)="formatDateOfBirth()"
+            value="{{formattedDate | objectFilter}}">
           </ion-datetime>
-          <div *ngIf="submitted && getFormControl.dob.errors" class="danger">
-            <div *ngIf="getFormControl.dob.errors.required">Date of birth is required</div>
+          <div *ngIf="submitted && getFormControl.date_of_birth.errors" class="danger">
+            <div *ngIf="getFormControl.date_of_birth.errors.required">Date of birth is required</div>
           </div>
         </ion-item>
 
         <ion-item lines="none">
           <ion-label>Accept terms and conditions:</ion-label>
-          <ion-checkbox formControlName="termsAndCondition"></ion-checkbox>
-          <div *ngIf="submitted && getFormControl.termsAndCondition.errors" class="danger">
-            <div *ngIf="getFormControl.termsAndCondition.errors.required">Terms and conditions is
+          <ion-checkbox formControlName="accept_terms_condition"></ion-checkbox>
+          <div *ngIf="submitted && getFormControl.accept_terms_condition.errors" class="danger">
+            <div *ngIf="getFormControl.accept_terms_condition.errors.required">Terms and conditions is
               required</div>
           </div>
         </ion-item>
