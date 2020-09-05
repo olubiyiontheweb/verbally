@@ -18,31 +18,40 @@
 
     <ion-card-content>
 
-      <!-- Inputs with labels -->
-      <ion-item lines="none">
-        <ion-label position="floating">Email/Username:</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
+      <form [formGroup]="loginForm">
 
-      <ion-item lines="none">
-        <ion-label position="floating">Password:</ion-label>
-        <ion-input type="password"></ion-input>
-      </ion-item>
+        <!-- Inputs with labels -->
+        <ion-item lines="none">
+          <ion-label position="floating">Username:</ion-label>
+          <ion-input formControlName="username"></ion-input>
+          <div *ngIf="submitted && getFormControl.username.errors" class="danger">
+            <div *ngIf="getFormControl.username.errors.required" color="danger">Email is required</div>
+          </div>
+        </ion-item>
 
-      <ion-row>
-        <ion-col>
-          <ion-button color="success" expand="block" class="btn-store">
-            Signin
-          </ion-button>
-        </ion-col>
-      </ion-row>
+        <ion-item lines="none">
+          <ion-label position="floating">Password:</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+          <div *ngIf="submitted && getFormControl.password.errors" class="danger">
+            <div *ngIf="getFormControl.password.errors.required" color="danger">Password is required</div>
+          </div>
+        </ion-item>
 
-      <ion-row>
-        <ion-col>
-          No account yet? <a routerLink="/tabs/register">Signup</a>
-        </ion-col>
-      </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button color="success" expand="block" class="btn-store" (click)="userLogin()">
+              Signin
+            </ion-button>
+          </ion-col>
+        </ion-row>
 
+        <ion-row>
+          <ion-col>
+            No account yet? <a routerLink="/tabs/register">Signup</a>
+          </ion-col>
+        </ion-row>
+
+      </form>
 
     </ion-card-content>
   </ion-card>

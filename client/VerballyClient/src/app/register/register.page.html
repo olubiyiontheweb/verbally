@@ -35,7 +35,7 @@
             [ngClass]="{ 'is-invalid': submitted && getFormControl.first_name.errors }">
           </ion-input>
           <div *ngIf="submitted && getFormControl.first_name.errors" class="danger">
-            <div *ngIf="getFormControl.first_name.errors.required" color="danger">First Name is required</div>
+            <div *ngIf="getFormControl.first_name.errors.required" color="danger">Full Name is required</div>
           </div>
         </ion-item>
 
@@ -61,6 +61,7 @@
           <ion-input formControlName="password"></ion-input>
           <div *ngIf="submitted && getFormControl.password.errors" class="danger">
             <div *ngIf="getFormControl.password.errors.required" color="danger">Password is required</div>
+            <div *ngIf="getFormControl.password.errors.minlength">Password must be at least 6 characters</div>
           </div>
         </ion-item>
 
@@ -68,8 +69,10 @@
           <ion-label position="floating">Confirm Password:</ion-label>
           <ion-input formControlName="password_confirmation"></ion-input>
           <div *ngIf="submitted && getFormControl.password_confirmation.errors" class="danger">
-            <div *ngIf="getFormControl.password_confirmation.errors.required" color="danger">Confirm Password is
-              required</div>
+            <div *ngIf="getFormControl.password_confirmation.errors.required" color="danger">Password is required</div>
+            <div *ngIf="getFormControl.password_confirmation.errors.minlength">Password must be at least 6 characters
+            </div>
+            <div *ngIf="getFormControl.password_confirmation.errors.mustMatch" color="danger">password mismatch</div>
           </div>
         </ion-item>
 
