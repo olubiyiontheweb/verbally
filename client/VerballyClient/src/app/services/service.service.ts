@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
@@ -9,6 +9,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 export class ServiceService {
 
   private API_URL: string = "http://127.0.0.1:3000/";
+
 
   constructor(private http: HttpClient) { }
 
@@ -32,12 +33,25 @@ export class ServiceService {
   };
 
   registerUsers(object) {
-    let endpoint = "api/v1/users";
+
+    let endPoint = "api/v1/users";
     return this.http
-      .post(this.API_URL + endpoint, object)
+      .post(this.API_URL + endPoint, object, {
+        headers: { 'Content-Type': 'application/json' }
+      })
       .pipe(
         map(this.extractData),
         catchError(this.handleError<any>("registerUsers"))
+      )
+  }
+
+  userLogin(object) {
+    let endPoint = "api/v1/users/sign_in";
+    return this.http.post(this.API_URL + endPoint, object, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .pipe(map(this.extractData),
+        catchError(this.handleError<any>("userLogin"))
       )
   }
 
