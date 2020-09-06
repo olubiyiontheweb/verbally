@@ -1,6 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   # confirm user is authenticated before showing user details
   # before_action :authenticate_user!
+  respond_to :html, :json
 
   def show
     # search users by username

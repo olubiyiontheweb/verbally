@@ -1,7 +1,6 @@
 class Api::V1::RegistrationsController < Devise::RegistrationsController
   wrap_parameters User
-  before_action :ensure_params_exist, only: :create
-  before_action :check_unique_values
+  before_action :ensure_params_exist, :check_unique_values, only: :create
 
   def create
     user = User.new(user_params)
@@ -20,34 +19,20 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  # DELETE /resource
+  def destroy
+    resource.soft_delete
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    set_flash_message :notice, :destroyed
+    yield resource if block_given?
+    respond_with_navigational(resource) { redirect_to after_sign_out_path_for(resource_name) }
+  end
+
   private
 
   def user_params
-    # devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name password password_confirmation
-    #                                                     email username date_of_birth accept_terms_condition])
+    # configuring permitted attributes
     params.require(:user).permit(:email, :password, :password_confirmation, :username, :first_name, :last_name,
                                  :date_of_birth, :accept_terms_condition)
-  end
-
-  def ensure_params_exist
-    return if params[:user].present?
-
-    render json: {
-      messages: 'Missing Params',
-      is_success: false,
-      data: {}
-    }, status: :bad_request
-  end
-
-  def check_unique_values
-    user_det = User.new(user_params)
-    return unless User.find_by_username(user_det.username).present? || User.find_by_email(user_det.email).present?
-    
-    user_det.errors.add(:base, :username_or_email_exists, message: 'Some parameters (e.g username or email) exists in the database')
-    render json: {
-      messages: 'Some parameters (e.g username or email) exists in the database',
-      is_success: false,
-      data: {}
-    }, status: :bad_request
   end
 end

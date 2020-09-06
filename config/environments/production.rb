@@ -66,7 +66,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = mail_delivery_method
 
-  config.action_mailer.default_url_options = { host: ENV.fetch('host_address') }
+  config.action_mailer.default_url_options = { host: ENV.fetch('host_address'), port: ENV.fetch('host_port') }
 
   if mail_delivery_method == :smtp
     ActionMailer::Base.smtp_settings = {

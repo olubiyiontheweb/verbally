@@ -6,7 +6,11 @@ Rails.application.routes.draw do
         # to suport signing up, editing, login in  users via the api
 
         # remember to skip registrations, user accounts should be deactivated not destroyed
-        devise_for :users
+        devise_for :users, controllers: {
+          sessions: 'api/v1/sessions',
+          registrations: 'api/v1/registrations',
+          confirmations: 'api/v1/confirmations'
+        }
         # devise_for :users, constraints: { format: 'json' }
         # resources :users, only: %i[new edit show]
 

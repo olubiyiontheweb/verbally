@@ -13,12 +13,14 @@ class User
   field :last_name, :string
   field :email, :string
   field :username, :string
+  field :admin, :boolean, store_as_native_boolean: false
   field :encrypted_password, :string
   field :password_salt, :string
   field :accept_terms_condition, :boolean, store_as_native_boolean: false
   field :date_of_birth, :date, store_as_string: true
   field :unconfirmed_email, :string
   field :confirmed_at, :datetime
+  field :deleted_at, :datetime
   field :confirmation_token, :string
   field :confirmation_sent_at, :datetime
   field :reset_password_token, :string
@@ -36,19 +38,30 @@ class User
   global_secondary_index hash_key: :reset_password_token, projected_attributes: :all
 
   # to supports password hashing, user signup, password resets, email confirmations and login counts
-  devise :database_authenticatable, :registerable, :recoverable, :confirmable,
+  devise :database_authenticatable, :registerable, :recoverable, :confirmable, :rememberable,
          :trackable, :encryptable, encryptor: :restful_authentication_sha1
-  #  :rememberable, :lockable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
+  #   :lockable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
 
   validates_presence_of :username
   validates_confirmation_of :password
   validates_format_of :email, with: /@/
 
-  # def check_if_record_exists
-  #   User.username.errors.add('Username exists') if @username == true
-  # end
-
   protected
+
+  # instead of deleting, indicate the user requested a delete & timestamp it
+  def soft_delete
+    update_attribute(:deleted_at, Time.current)
+  end
+
+  # ensure user account is active
+  def active_for_authentication?
+    super && !deleted_at
+  end
+
+  # provide a custom message for a deleted account
+  def inactive_message
+    !deleted_at ? super : :deleted_account
+  end
 
   def confirmation_required?
     ENV.fetch('confirmation_required')
