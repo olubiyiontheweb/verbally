@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: 'confirmregistration',
+    loadChildren: () => import('./confirmregistration/confirmregistration.module').then( m => m.ConfirmregistrationPageModule)
   }
 ];
 

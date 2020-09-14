@@ -31,6 +31,10 @@ const routes: Routes = [
       {
         path: 'sigin',
         loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule)
+      },
+      {
+        path: `confirmation/:code`,
+        loadChildren: () => import('../confirmregistration/confirmregistration.module').then(m => m.ConfirmregistrationPageModule)
       }
 
     ]

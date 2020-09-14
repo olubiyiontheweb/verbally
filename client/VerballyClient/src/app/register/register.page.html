@@ -58,7 +58,7 @@
 
         <ion-item lines="none">
           <ion-label position="floating">Password:</ion-label>
-          <ion-input formControlName="password"></ion-input>
+          <ion-input formControlName="password" type="password"></ion-input>
           <div *ngIf="submitted && getFormControl.password.errors" class="danger">
             <div *ngIf="getFormControl.password.errors.required" color="danger">Password is required</div>
             <div *ngIf="getFormControl.password.errors.minlength">Password must be at least 6 characters</div>
@@ -67,7 +67,7 @@
 
         <ion-item lines="none">
           <ion-label position="floating">Confirm Password:</ion-label>
-          <ion-input formControlName="password_confirmation"></ion-input>
+          <ion-input formControlName="password_confirmation" type="password"></ion-input>
           <div *ngIf="submitted && getFormControl.password_confirmation.errors" class="danger">
             <div *ngIf="getFormControl.password_confirmation.errors.required" color="danger">Password is required</div>
             <div *ngIf="getFormControl.password_confirmation.errors.minlength">Password must be at least 6 characters
