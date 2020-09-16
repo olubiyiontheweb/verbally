@@ -14,6 +14,12 @@ Rails.application.routes.draw do
         # devise_for :users, constraints: { format: 'json' }
         # resources :users, only: %i[new edit show]
 
+        # namespace :users do
+          # Registrations
+          # get   '/sign_in'   => 'api/v1/sessions#new'
+          # post  '/sign_in'   => 'api/v1/sessions#create'
+        # end
+
         # to display user details
         resources :users, only: [:show]
       end

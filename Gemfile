@@ -57,13 +57,17 @@ gem 'aws-sdk-sesv2' # Amazon SMTP mails
 gem 'devise'
 gem 'devise-dynamoid' # support Dynamoid generator with devise
 gem 'devise-encryptable'
+#gem 'devise_multiple_token_auth', git: 'https://github.com/querldox5/DeviseMultipleTokenAuth'
 gem 'dynamodb-migration'
 gem 'dynamoid' # ORM for AWS Dynamodb
 gem 'dynamoid-orm-adapter'
 gem 'dynamoid-paperclip' # to support file uploads
 gem 'figaro' # to support environment variables
 gem 'google-cloud-text_to_speech', '~> 1.1', '>= 1.1.1'
+gem 'omniauth-facebook'
+gem 'omniauth-google'
 gem 'rack-cors' # to support cross application transfer of data
+#gem 'tiddle', git: 'https://github.com/querldox5/tiddle'
 
 group :development, :test do
   gem 'mailcatcher'

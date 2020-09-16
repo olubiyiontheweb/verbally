@@ -3,8 +3,7 @@ class ApplicationController < ActionController::API
 
   # protect against mass asignment attack during app interactions
 
-  respond_to :html, :json
-  before_action :configure_permitted_parameters, if: :devise_controller?
+  respond_to :json
   # before_action :authenticate_user!
 
   def status
@@ -23,28 +22,52 @@ class ApplicationController < ActionController::API
     }, status: :bad_request
   end
 
-  def check_unique_values
-    user_det = User.new(user_params)
-    # return unless User.where(email: user_det.username).present? || User.where(email: user_det.email).present?
-    return unless User.find_by_username(user_det.username).present? || User.find_by_email(user_det.email).present?
-
-    user_det.errors.add(:base, :username_or_email_exists, message: 'Some parameters (e.g username or email) exists in the database')
-    render json: {
-      messages: 'Some parameters (e.g username or email) exists in the database',
-      is_success: false,
-      data: {}
-    }, status: :bad_request
+  def generate_token(user)
+    # response.set_header('authtoken', 'HEADER VALUE')
+    # ffff
+    token = Digest::SHA1.hexdigest(ENV.fetch('auth_token_key') + user.id + Time.now.to_s)
+    response.set_header('Authorization', ' Bearer ' + token)
+    priv_token = Digest::SHA1.hexdigest token
+    authtoken = AuthenticationToken.new(user_id: user.id, token: priv_token, expires_in: 30)
+    authtoken.save
   end
 
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name password password_confirmation
-                                                         email username date_of_birth accept_terms_condition])
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name bio])
-    devise_parameter_sanitizer.permit(:sign_in) do |user_params|
-      # user can login by providing username or email address
-      user_params.permit(:username, :email)
+  def validate_token(user)
+    # token
+    pub_token = request.headers['Authorization']
+    priv_token = Digest::SHA1.hexdigest pub_token
+    @token = AuthenticationToken.find_by_token(priv_token) if AuthenticationToken.find_by_token(priv_token).present?
+    if @token.present? && @token.user_id == user.id
+      # update last used at
+      @token.update_attributes(last_used_at: Time.now.to_s)
+    else
+      # validation_error(user)
+      render json: {
+        messages: 'Invalid Authorization token, sign in failed',
+        is_success: false,
+        data: { user: user.errors.full_messages }
+      }, status: :unprocessable_entity
     end
+  end
+
+  def render_resource(resource)
+    if resource.errors.empty?
+      render json: resource
+    else
+      validation_error(resource)
+    end
+  end
+
+  def validation_error(resource)
+    render json: {
+      errors: [
+        {
+          status: '400',
+          title: 'Bad Request',
+          detail: resource.errors,
+          code: '100'
+        }
+      ]
+    }, status: :bad_request
   end
 end

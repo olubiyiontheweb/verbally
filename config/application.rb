@@ -32,6 +32,10 @@ module Verbally
     # App wide API only configuration
     config.api_only = true
 
+    config.filter_parameters += %i[password token jti]
+
+    config.middleware.delete ActionDispatch::Session::CookieStore
+
     config.generators do |g|
       g.orm :dynamoid
     end
