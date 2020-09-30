@@ -4,7 +4,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
   before_action :check_unique_values, only: :create
 
   def create
-    user = User.new(user_params)
+    user = User.new(sign_up_params)
     if user.save
       generate_token(user)
       render json: {
