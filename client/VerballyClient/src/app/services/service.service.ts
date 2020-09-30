@@ -51,4 +51,15 @@ export class ServiceService {
         catchError(this.handleError)
       )
   }
+
+  userAccountConfirmation(confirmations) {
+    let endPoint = "api/v1/users/confirmation?";
+    return this.http.post(this.API_URL + endPoint, confirmations, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .pipe(map(this.extractData),
+        catchError(this.handleError)
+      )
+  }
+
 }
