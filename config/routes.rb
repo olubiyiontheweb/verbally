@@ -11,14 +11,23 @@ Rails.application.routes.draw do
           registrations: 'api/v1/registrations',
           confirmations: 'api/v1/confirmations'
         }
-        # devise_for :users, constraints: { format: 'json' }
+        # devise_for :users, constraints: { fosrmat: 'json' }
         # resources :users, only: %i[new edit show]
 
         # namespace :users do
-          # Registrations
-          # get   '/sign_in'   => 'api/v1/sessions#new'
-          # post  '/sign_in'   => 'api/v1/sessions#create'
+        #   post  '/sign_in'   => 'sessions#create'
+        #   delete   '/sign_out'   => 'sessions#destroy'
+        #   post  '/'   => 'registrations#create'
+        #   delete   '/'   => 'registrations#destroy'
+        #   post  '/confirmation'   => 'confirmations#create'
+        #   get   '/confirmation'   => 'confirmations#show'
         # end
+        
+
+        # resources :sessions, only: [:create, :destroy], path: 'users/sign_in'
+        # resources :sessions, only: [:destroy], path: 'users/sign_out'
+        # resources :registrations, only: [:create, :destroy], path: 'users'
+        # resources :confirmations, only: [:create, :show], path: 'users/confirmation'
 
         # to display user details
         resources :users, only: [:show]

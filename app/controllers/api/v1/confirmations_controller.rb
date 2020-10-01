@@ -15,33 +15,28 @@ class Api::V1::ConfirmationsController < Devise::ConfirmationsController
   #   end
   # end
 
-  # def create
-  #   # get user by confirmation token and confirm
-  #   user = User.new(userconf_params)
-  #   user = User.find_by_confirmation_token(user.confirmation_token)
-  #   if user.blank? || user.confirmed?
-  #     render json: {
-  #       messages: 'Invalid or expired confirmation token submitted, account confirmation Failed',
-  #       is_success: false,
-  #       data: { user: user.errors.full_messages }
-  #     }, status: :unprocessable_entity
-  #   else
-  #     user.confirm
-  #     render json: {
-  #       messages: 'Your account has been confirmed Successfully',
-  #       is_success: true,
-  #       data: { user: user }
-  #     }, status: :ok
-  #   end
-  # end
+  def show
+    # get user by confirmation token and confirm
+    user = User.new(confirmation_params)
+    user = User.find_by_confirmation_token(user.confirmation_token)
+    if user.blank? || user.confirmed?
+      validation_error(user, 'Invalid or expired confirmation token submitted, account confirmation Failed')
+    else
+      user.confirm
+      render_resource(user, 'Your account has been confirmed Successfully')
+    end
+  end
+
+  def create
+    user = User.find(params[:id])
+    validate_token(user)
+    User.find(params[:id]).resend_confirmation_instructions
+  end
+  
 
   private
 
-  # def userconf_params
-  #   params.require(:user).permit(:confirmation_token)
-  # end
-
   def confirmation_params
-    params.require(:user).permit(:confirmation_token)
+    params.require(:user).permit(:id, :confirmation_token)
   end
 end

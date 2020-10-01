@@ -51,8 +51,6 @@ class User
     super && !deleted_at
   end
 
-  private
-
   # instead of deleting, indicate the user requested a delete & timestamp it
   def soft_delete
     update_attribute(:deleted_at, Time.current)

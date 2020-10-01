@@ -6,71 +6,33 @@ class Api::V1::SessionsController < Devise::SessionsController
   def create
     # sign user, check valid password and email details
     user = User.new(sign_in_params)
-    @userdet = User.find_by_email(user.email) if User.find_by_email(user.email).present?
+
+    if User.find_by_email(user.email).present?
+      @userdet = User.find_by_email(user.email) 
+    elsif User.find_by_username(user.email).present?
+      @userdet = User.find_by_username(user.email)
+    end
+
     if @userdet.present? && @userdet.valid_password?(user.password)
-      # userdet = User.find_by_email(user.email)
-      # if userdet.valid_password?(user.password)
       sign_in @userdet, event: :authentication
       generate_token(@userdet)
-      # response.set_header('Authorization', 'HEADER VALUE')
-      render json: {
-        messages: 'User signedin successfully',
-        is_success: true,
-        data: { user: @userdet }
-      }, status: :ok
+      render_resource(@userdet, 'User signedin successfully')
     else
-      render json: {
-        messages: 'email or password incorrect, signin failed',
-        is_success: false,
-        data: { user: user.errors.full_messages }
-      }, status: :unprocessable_entity
+      validation_error(user, 'email or password incorrect, signin failed')
     end
   end
 
-  # def create
-  #   # sign user, check valid password and email details
-  #   user = User.new(sign_in_params)
-  #   if User.find_by_email(user.email).present?
-  #     userdet = User.find_by_email(user.email)
-  #     if userdet.valid_password?(user.password)
-  #       user = sign_in(:user, userdet)
-  #       token = Tiddle.create_and_return_token(user, request)
-  #       render json: {
-  #         authentication_token: token,
-  #         messages: 'User signedin successfully',
-  #         is_success: true,
-  #         data: { user: user }
-  #       }, status: :ok
-  #     else
-  #       render json: {
-  #         messages: 'email or password incorrect, signin Failed',
-  #         is_success: false,
-  #         data: { user: user.errors.full_messages }
-  #       }, status: :unprocessable_entity
-  #     end
-  #   else
-  #     render json: {
-  #       messages: 'email or password incorrect, signin Failed',
-  #       is_success: false,
-  #       data: { user: user.errors.full_messages }
-  #     }, status: :unprocessable_entity
-  #   end
-  # end
-
   def destroy
-    user = User.new(sign_in_params)
-    if User.find_by_email(user.email).present?
-      user = User.find_by_email(user.email)
-      sign_out(userdet) if user.signed_in?
+    if User.find_by_email(params[:email]).present?
+      user = User.find_by_email(params[:email])
+      validate_token(user)
+      delete_token(user)
     end
   end
 
   private
 
-  # def usercred_params
-  #   params.require(:user).permit(:email, :password)
-  # end
-
+  # user can pass username or email in email field
   def sign_in_params
     params.require(:user).permit(:password, :email)
   end
