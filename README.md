@@ -4,7 +4,7 @@ A productivity tool that helps creators and marketers create audio voice overs, 
 
 Still in development ...... 
 
-[![Demo image](https://github.com/olubiyiontheweb/verbally/blob/master/public/verbally.jpeg)]
+![Demo image](https://github.com/olubiyiontheweb/verbally/blob/master/public/verbally.jpeg)
 
 ### To setup this app on your local system
 
