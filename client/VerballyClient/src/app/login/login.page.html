@@ -22,10 +22,10 @@
 
         <!-- Inputs with labels -->
         <ion-item lines="none">
-          <ion-label position="floating">Username:</ion-label>
-          <ion-input formControlName="username"></ion-input>
-          <div *ngIf="submitted && getFormControl.username.errors" class="danger">
-            <div *ngIf="getFormControl.username.errors.required" color="danger">Email is required</div>
+          <ion-label position="floating">Email:</ion-label>
+          <ion-input formControlName="email"></ion-input>
+          <div *ngIf="submitted && getFormControl.email.errors" class="danger">
+            <div *ngIf="getFormControl.email.errors.required" color="danger">Email is required</div>
           </div>
         </ion-item>
 

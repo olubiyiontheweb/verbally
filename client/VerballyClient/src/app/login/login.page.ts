@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../services/service.service';
 import { take } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginPage implements OnInit {
   submitted = false;
 
   constructor(private service: ServiceService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private alert: AlertService) { }
 
   get getFormControl() {
     return this.loginForm.controls;
@@ -21,7 +23,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
     })
   }
@@ -30,7 +32,7 @@ export class LoginPage implements OnInit {
     this.submitted = true;
 
     let formData = JSON.stringify({
-      "username": this.getFormControl.username.value.trim(),
+      "email": this.getFormControl.email.value.trim(),
       "password": this.getFormControl.password.value.trim()
     });
 
@@ -38,7 +40,9 @@ export class LoginPage implements OnInit {
 
     this.service.userLogin(formData).pipe(take(1))
       .subscribe((response) => {
-        console.log(response);
+        if (response) {
+          this.alert.presentAlert(response);
+        }
       });
   }
 

@@ -3,7 +3,7 @@ import { NgForm, FormGroup, FormControl, Validators, FormBuilder } from '@angula
 
 import { take } from 'rxjs/operators';
 import { ServiceService } from '../services/service.service';
-import { AlertController } from '@ionic/angular';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +20,7 @@ export class RegisterPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private serviceService: ServiceService,
-    private alertCtrl: AlertController,
+    private alertService: AlertService,
     private cdref: ChangeDetectorRef
   ) { }
 
@@ -66,28 +66,6 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  async presentAlert(message) {
-    let messageAlert = "";
-    let isSuccess = message.is_success;
-    if (isSuccess !== undefined && isSuccess == true) {
-      messageAlert = message.messages;
-    }
-    else {
-      messageAlert = message.messages;
-    }
-    const alert = await this.alertCtrl.create({
-      header: 'Alert',
-      message: messageAlert,
-      buttons: [{
-        text: 'Close',
-        handler: (isSuccess) => {
-          console.log("redirecting here");
-        }
-      }],
-    });
-
-    await alert.present();
-  }
 
   registerUser() {
     this.submitted = true;
@@ -113,10 +91,10 @@ export class RegisterPage implements OnInit {
         .subscribe((response) => {
 
           if (response) {
-            this.presentAlert(response);
+            this.alertService.presentAlert(response);
           }
         }, (error) => {
-          this.presentAlert(error);
+          this.alertService.presentAlert(error);
         });
     }
   }
