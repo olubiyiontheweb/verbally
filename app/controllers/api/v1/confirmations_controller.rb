@@ -1,7 +1,7 @@
-class Api::V1::ConfirmationsController < Devise::ConfirmationsController
+class Api::V1::ConfirmationsController < ApplicationController
   wrap_parameters User
 
-  before_action :ensure_params_exist
+  # before_action :ensure_params_exist
 
   # def show
   #   user = User.new(userconf_params)
@@ -17,8 +17,9 @@ class Api::V1::ConfirmationsController < Devise::ConfirmationsController
 
   def show
     # get user by confirmation token and confirm
-    user = User.new(confirmation_params)
-    user = User.find_by_confirmation_token(user.confirmation_token)
+    # user = User.new(confirmation_params)
+    user = User.find_by_confirmation_token(params[:id])
+    # user = User.find_by_confirmation_token(user.confirmation_token)
     if user.blank?
       validation_error(user, 'Invalid or expired confirmation token submitted, account confirmation Failed')
     elsif user.confirmed?
@@ -38,6 +39,6 @@ class Api::V1::ConfirmationsController < Devise::ConfirmationsController
   private
 
   def confirmation_params
-    params.require(:user).permit(:id, :confirmation_token)
+    params.require(:user).permit(:id)
   end
 end

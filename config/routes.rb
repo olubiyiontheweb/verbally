@@ -8,8 +8,7 @@ Rails.application.routes.draw do
         # remember to skip registrations, user accounts should be deactivated not destroyed
         devise_for :users, controllers: {
           sessions: 'api/v1/sessions',
-          registrations: 'api/v1/registrations',
-          confirmations: 'api/v1/confirmations'
+          registrations: 'api/v1/registrations'
         }
         # devise_for :users, constraints: { fosrmat: 'json' }
         # resources :users, only: %i[new edit show]
@@ -22,7 +21,6 @@ Rails.application.routes.draw do
         #   post  '/confirmation'   => 'confirmations#create'
         #   get   '/confirmation'   => 'confirmations#show'
         # end
-        
 
         # resources :sessions, only: [:create, :destroy], path: 'users/sign_in'
         # resources :sessions, only: [:destroy], path: 'users/sign_out'
@@ -31,6 +29,7 @@ Rails.application.routes.draw do
 
         # to display user details
         resources :users, only: [:show]
+        resources :confirmations, only: [:show]
       end
     end
   end

@@ -28,7 +28,7 @@ class ApplicationController < ActionController::API
   end
 
   def validate_token(user)
-    # token 
+    # token
     if request.headers['Authorization'].blank?
       validation_error(user, 'Unauthorized access, no token provided')
     else
@@ -59,8 +59,6 @@ class ApplicationController < ActionController::API
       if @token.present? && @token.user_id == user.id && user.active_for_authentication?
         @token.delete
         render_resource(user, 'Token deleted successfully')
-      elsif
-        
       else
         validation_error(user, 'Token does not exist, User already signed out')
       end
