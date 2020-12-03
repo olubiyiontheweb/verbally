@@ -12,6 +12,7 @@ import { AlertService } from '../services/alert.service';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   submitted = false;
+  redirect = [];
 
   constructor(private service: ServiceService,
     private formBuilder: FormBuilder,
@@ -36,12 +37,11 @@ export class LoginPage implements OnInit {
       "password": this.getFormControl.password.value.trim()
     });
 
-    console.log(formData);
-
     this.service.userLogin(formData).pipe(take(1))
       .subscribe((response) => {
         if (response) {
-          this.alert.presentAlert(response);
+          this.redirect[0] = '/tabs/collection';
+          this.alert.presentAlert(response, this.redirect);
         }
       });
   }

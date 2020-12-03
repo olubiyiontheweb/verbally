@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 
 import { AlertController } from '@ionic/angular';
 
+import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AlertService {
 
-  constructor(private alertCtrl: AlertController,) { }
+  constructor(private alertCtrl: AlertController,
+    private router: Router) { }
 
-  async presentAlert(message) {
+  async presentAlert(message, redirect) {
     let messageAlert = "";
     let isSuccess = message.is_success;
     if (isSuccess !== undefined && isSuccess == true) {
@@ -23,8 +26,13 @@ export class AlertService {
       message: messageAlert,
       buttons: [{
         text: 'Close',
-        handler: (isSuccess) => {
-          console.log("redirecting here");
+        handler: () => {
+          if (isSuccess == true) {
+            this.router.navigate([redirect[0]]);
+          }
+          else {
+            this.router.navigate([redirect[1]]);
+          }
         }
       }],
     });
