@@ -29,7 +29,6 @@ export class ConfirmregistrationPage implements OnInit {
 
   extractUserCode() {
     this.confirmationToken = this.activatedRoute.snapshot.params;
-    console.log(this.confirmationToken);
 
     let formData = JSON.stringify({
       "confirmation_token": this.confirmationToken
@@ -37,6 +36,7 @@ export class ConfirmregistrationPage implements OnInit {
 
     this.service.userAccountConfirmation(formData).pipe(take(1))
       .subscribe((response) => {
+        console.log(response);
         this.alertService.presentAlert(response);
       });
   }
