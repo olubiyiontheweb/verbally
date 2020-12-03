@@ -19,8 +19,10 @@ class Api::V1::ConfirmationsController < Devise::ConfirmationsController
     # get user by confirmation token and confirm
     user = User.new(confirmation_params)
     user = User.find_by_confirmation_token(user.confirmation_token)
-    if user.blank? || user.confirmed?
+    if user.blank?
       validation_error(user, 'Invalid or expired confirmation token submitted, account confirmation Failed')
+    elsif user.confirmed?
+      validation_error(user, 'User has already been confirmed')
     else
       user.confirm
       render_resource(user, 'Your account has been confirmed Successfully')
@@ -32,7 +34,6 @@ class Api::V1::ConfirmationsController < Devise::ConfirmationsController
     validate_token(user)
     User.find(params[:id]).resend_confirmation_instructions
   end
-  
 
   private
 

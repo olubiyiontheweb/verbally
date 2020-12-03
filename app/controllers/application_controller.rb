@@ -28,9 +28,9 @@ class ApplicationController < ActionController::API
   end
 
   def validate_token(user)
-    # token
+    # token 
     if request.headers['Authorization'].blank?
-      validation_error(user, "Unauthorized access, no token provided")
+      validation_error(user, 'Unauthorized access, no token provided')
     else
       pub_token = request.headers['Authorization']
       priv_token = Digest::SHA1.hexdigest pub_token
@@ -43,26 +43,28 @@ class ApplicationController < ActionController::API
         # update last used at
         @token.update_attributes(last_used_at: Time.now.to_s)
       else
-        return 'Invalid authorization token, authentication failed!'
-        #validation_error(user, 'Invalid authorization token, authentication failed!')
+        'Invalid authorization token, authentication failed!'
+        # validation_error(user, 'Invalid authorization token, authentication failed!')
       end
     end
   end
 
   def delete_token(user)
     if request.headers['Authorization'].blank?
-      validation_error(user, "Unauthorized access, no token provided")
+      validation_error(user, 'Unauthorized access, no token provided')
     else
       pub_token = request.headers['Authorization']
       priv_token = Digest::SHA1.hexdigest pub_token
       @token = AuthenticationToken.find_by_token(priv_token) if AuthenticationToken.find_by_token(priv_token).present?
       if @token.present? && @token.user_id == user.id && user.active_for_authentication?
         @token.delete
-        render_resource(user, "Token deleted successfully")
+        render_resource(user, 'Token deleted successfully')
+      elsif
+        
       else
-        validation_error(user, "Token does not exist, User already signed out")
+        validation_error(user, 'Token does not exist, User already signed out')
       end
-    end 
+    end
   end
 
   # show success reponse
@@ -81,11 +83,15 @@ class ApplicationController < ActionController::API
   # show error response
   def validation_error(resource, message)
     if message.present?
-      resource.errors.add(:base, message: message)
+      unless resource.blank?
+        resource.errors.add(:base, message: message)
+        message = resource.errors.full_messages
+        message = message[0][:message]
+      end
       render json: {
         messages: message,
         is_success: false,
-        data: resource.errors.full_messages
+        data: message
       }, status: :unprocessable_entity
     end
   end

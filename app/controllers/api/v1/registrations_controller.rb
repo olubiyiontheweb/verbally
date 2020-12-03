@@ -7,7 +7,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
     user = User.new(sign_up_params)
     if user.save
       generate_token(user)
-      
+
       render_resource(user, 'Sign Up Successfully')
     else
       validation_error(user, 'Empty parameter submitted, Sign Up Failed')
@@ -20,7 +20,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
     validate_token(user)
     user.soft_delete
     delete_token(user)
-    #set_flash_message :notice, :destroyed
+    # set_flash_message :notice, :destroyed
   end
 
   private
