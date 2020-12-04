@@ -53,7 +53,7 @@ export class ServiceService {
   }
 
   userAccountConfirmation(formData) {
-    let endPoint = "api/v1/confirmations/" + formData;
+    let endPoint = "api/v1/users/confirmations/" + formData;
     return this.http
       .get(this.API_URL + endPoint, {
         headers: { 'Content-Type': 'application/json' }
