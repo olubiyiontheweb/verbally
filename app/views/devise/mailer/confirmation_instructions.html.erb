@@ -1,0 +1,7 @@
+<p>Welcome <%= @email %>!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><%= link_to 'Confirm my account', ENV.fetch('host_url') + '/tabs/accounts/confirmation/' + @token %></p>
+
+<!-- api_v1_users_confirmation_url(@resource, confirmation_token: @token) %></p> -->

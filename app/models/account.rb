@@ -1,13 +1,13 @@
 # user record
 
-class User
+class Account
   include Dynamoid::Document
   include ActiveModel::Validations
 
   has_many :authentication_tokens
 
   # specifying table name for this model, it'll be created if it does not exist yet
-  table name: :creators, key: :id, read_capacity: 5, write_capacity: 5
+  table name: :accounts, key: :id, read_capacity: 5, write_capacity: 5
   field :id, :string
   field :first_name, :string
   field :last_name, :string

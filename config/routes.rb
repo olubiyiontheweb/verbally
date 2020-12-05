@@ -3,33 +3,39 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       defaults format: :json do
-        # to suport signing up, editing, login in  users via the api
+        # to suport signing up, editing, login in  accounts via the api
 
-        # remember to skip registrations, user accounts should be deactivated not destroyed
-        devise_for :users, controllers: {
-          sessions: 'api/v1/sessions',
-          registrations: 'api/v1/registrations'
+        # remember to skip registrations, account accounts should be deactivated not destroyed
+        devise_for :accounts, skip: [:confirmation], controllers: {
+          sessions: 'api/v1/accounts/sessions',
+          # confirmations: 'api/v1/accounts/confirmations',
+          registrations: 'api/v1/accounts/registrations'
         }
-        # devise_for :users, constraints: { fosrmat: 'json' }
-        # resources :users, only: %i[new edit show]
+        # devise_for :accounts, constraints: { fosrmat: 'json' }
+        # resources :accounts, only: %i[new edit show]
 
-        # namespace :users do
-        #   post  '/sign_in'   => 'sessions#create'
+        # namespace :accounts do
+        #   yarn  '/sign_in'   => 'sessions#create'
         #   delete   '/sign_out'   => 'sessions#destroy'
-        #   post  '/'   => 'registrations#create'
+        #   yarn  '/'   => 'registrations#create'
         #   delete   '/'   => 'registrations#destroy'
-        #   post  '/confirmation'   => 'confirmations#create'
+        #   yarn  '/confirmation'   => 'confirmations#create'
         #   get   '/confirmation'   => 'confirmations#show'
         # end
 
-        # resources :sessions, only: [:create, :destroy], path: 'users/sign_in'
-        # resources :sessions, only: [:destroy], path: 'users/sign_out'
-        # resources :registrations, only: [:create, :destroy], path: 'users'
-        # resources :confirmations, only: [:create, :show], path: 'users/confirmation'
+        # resources :sessions, only: [:create, :destroy], path: 'accounts/sign_in'
+        # resources :sessions, only: [:destroy], path: 'accounts/sign_out'
+        # resources :registrations, only: [:create, :destroy], path: 'accounts'
+        # resources :confirmations, only: [:create, :show], path: 'accounts/confirmation'
 
-        # to display user details
-        resources :users, only: [:show]
-        resources :confirmations, only: [:show]
+        # to display account details
+        resources :accounts, only: [:show], module: 'accounts'
+
+        namespace :accounts do
+          resources :confirmations, only: [:show], path: 'confirmation'
+        end
+
+        resources :yarns, module: 'yarns'
       end
     end
   end
