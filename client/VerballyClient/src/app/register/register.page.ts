@@ -16,6 +16,7 @@ export class RegisterPage implements OnInit {
   submitted = false;
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   formattedDate;
+  redirect = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -89,12 +90,12 @@ export class RegisterPage implements OnInit {
 
       this.serviceService.registerUsers(formData).pipe(take(1))
         .subscribe((response) => {
-
+          this.redirect[0] = '/tabs/front';
           if (response) {
-            this.alertService.presentAlert(response);
+            this.alertService.presentAlert(response, this.redirect);
           }
         }, (error) => {
-          this.alertService.presentAlert(error);
+          this.alertService.presentAlert(error, '');
         });
     }
   }

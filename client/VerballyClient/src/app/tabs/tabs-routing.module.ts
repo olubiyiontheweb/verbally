@@ -34,7 +34,7 @@ const routes: Routes = [
         loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule)
       },
       {
-        path: `confirmation/:confirmation_token`,
+        path: 'confirmations/:confirmation_token',
         loadChildren: () => import('../confirmregistration/confirmregistration.module').then(m => m.ConfirmregistrationPageModule)
       }
 

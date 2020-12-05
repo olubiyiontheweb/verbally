@@ -13,6 +13,7 @@ import { take } from 'rxjs/operators';
 })
 export class ConfirmregistrationPage implements OnInit {
   confirmationToken: any;
+  redirect = [];
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -29,15 +30,12 @@ export class ConfirmregistrationPage implements OnInit {
 
   extractUserCode() {
     this.confirmationToken = this.activatedRoute.snapshot.params;
-
-    let formData = JSON.stringify({
-      "confirmation_token": this.confirmationToken
-    });
-
-    this.service.userAccountConfirmation(formData).pipe(take(1))
+    this.service.userAccountConfirmation(this.confirmationToken['confirmation_token']).pipe(take(1))
       .subscribe((response) => {
-        console.log(response);
-        this.alertService.presentAlert(response);
+        console.log(response.is_success);
+        this.loaderService.hideLoader();
+        this.redirect[0] = '/tabs/collection';
+        this.alertService.presentAlert(response, this.redirect);
       });
   }
 

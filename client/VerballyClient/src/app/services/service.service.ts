@@ -52,12 +52,14 @@ export class ServiceService {
       )
   }
 
-  userAccountConfirmation(confirmations) {
-    let endPoint = "api/v1/users/confirmation";
-    return this.http.post(this.API_URL + endPoint, confirmations, {
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .pipe(map(this.extractData),
+  userAccountConfirmation(formData) {
+    let endPoint = "api/v1/users/confirmations/" + formData;
+    return this.http
+      .get(this.API_URL + endPoint, {
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .pipe(
+        map(response => <any>response),
         catchError(this.handleError)
       )
   }
