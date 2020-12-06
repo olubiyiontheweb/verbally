@@ -7,7 +7,6 @@ class Api::V1::Accounts::RegistrationsController < Devise::RegistrationsControll
     account = Account.new(sign_up_params)
     if account.save
       generate_token(account)
-
       render_resource(account, 'Sign Up Successfully')
     else
       validation_error(account, 'Empty parameter submitted, Sign Up Failed')
@@ -16,28 +15,37 @@ class Api::V1::Accounts::RegistrationsController < Devise::RegistrationsControll
 
   # DELETE /resource
   def cancel
-    account = Account.find(params[:id])
-    validate_token(account)
-    account.soft_delete
-    delete_token(account)
-    # set_flash_message :notice, :destroyed
+    account = Account.new(sign_up_params)
+    token_response = {}
+    unless account.email.blank? && account.username.blank?
+      account = Account.find_by_username(account.username) || Account.find_by_email(account.email)
+      token_response = validate_token(account)
+      unless token_response[:is_success] == 'false'
+        token_response.merge!(delete_token(account))
+        account.soft_delete
+      end
+    end
+    token_response.merge!(token_response)
+    render token_response
   end
 
   private
 
   def check_unique_values
     account_det = Account.new(sign_up_params)
-    # return unless Account.where(email: account_det.accountname).present? || Account.where(email: account_det.email).present?
-    unless Account.find_by_accountname(account_det.accountname).present? || Account.find_by_email(account_det.email).present?
-      return
+    # return unless Account.where(email: account_det.username).present? || Account.where(email: account_det.email).present?
+    unless account_det.username.blank? || account_det.email.blank?
+      unless Account.find_by_username(account_det.username).present? || Account.find_by_email(account_det.email).present?
+        return
+      end
     end
 
-    # account_det.errors.add(:base, :accountname_or_email_exists, message: 'Some parameters (e.g accountname or email) exists in the database')
-    validation_error(account_det, 'Some parameters (e.g accountname or email) exists in the database')
+    # account_det.errors.add(:base, :username_or_email_exists, message: 'Some parameters (e.g username or email) exists in the database')
+    validation_error(account_det, 'Some parameters (e.g username or email) exists in the database')
   end
 
   def sign_up_params
-    params.require(:account).permit(:id, :email, :password, :password_confirmation, :accountname, :first_name, :last_name,
+    params.require(:account).permit(:id, :email, :password, :password_confirmation, :username, :first_name, :last_name,
                                     :date_of_birth, :accept_terms_condition)
   end
 end

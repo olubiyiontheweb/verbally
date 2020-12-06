@@ -1,7 +1,7 @@
 class AuthenticationToken
   include Dynamoid::Document
 
-  belongs_to :account
+  belongs_to :account, class_name: 'Account', foreign_key: 'account_id'
 
   # specifying table name for this model, it'll be created if it does not exist yet
   table name: :token_devices, key: :id, read_capacity: 5, write_capacity: 5

@@ -4,7 +4,8 @@ class Account
   include Dynamoid::Document
   include ActiveModel::Validations
 
-  has_many :authentication_tokens
+  has_many :authentication_tokens, class_name: 'authentication_token', foreign_key: 'account_id'
+  has_many :yarns, class_name: 'yarn', foreign_key: 'account_id'
 
   # specifying table name for this model, it'll be created if it does not exist yet
   table name: :accounts, key: :id, read_capacity: 5, write_capacity: 5

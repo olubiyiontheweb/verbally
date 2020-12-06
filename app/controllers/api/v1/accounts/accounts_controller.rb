@@ -3,6 +3,12 @@ class Api::V1::Accounts::AccountsController < ApplicationController
   # before_action :authenticate_user!
   respond_to :json
 
+  def index
+    # show only active accounts
+    @account = Account.where('deleted_at.null': true).all
+    render json: @account
+  end
+
   def show
     # search users by username
     @account = Account.where(username: params[:id])

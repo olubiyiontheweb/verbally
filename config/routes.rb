@@ -6,8 +6,7 @@ Rails.application.routes.draw do
         # to suport signing up, editing, login in  accounts via the api
 
         # remember to skip registrations, account accounts should be deactivated not destroyed
-        devise_for :accounts, skip: [:confirmation], controllers: {
-          sessions: 'api/v1/accounts/sessions',
+        devise_for :accounts, skip: %i[confirmation sessions], controllers: {
           # confirmations: 'api/v1/accounts/confirmations',
           registrations: 'api/v1/accounts/registrations'
         }
@@ -15,9 +14,9 @@ Rails.application.routes.draw do
         # resources :accounts, only: %i[new edit show]
 
         # namespace :accounts do
-        #   yarn  '/sign_in'   => 'sessions#create'
+        #   post  '/sign_in'   => 'sessions#create'
         #   delete   '/sign_out'   => 'sessions#destroy'
-        #   yarn  '/'   => 'registrations#create'
+        #   post  '/'   => 'registrations#create'
         #   delete   '/'   => 'registrations#destroy'
         #   yarn  '/confirmation'   => 'confirmations#create'
         #   get   '/confirmation'   => 'confirmations#show'
@@ -29,9 +28,11 @@ Rails.application.routes.draw do
         # resources :confirmations, only: [:create, :show], path: 'accounts/confirmation'
 
         # to display account details
-        resources :accounts, only: [:show], module: 'accounts'
+        resources :accounts, only: %i[show index], module: 'accounts'
 
         namespace :accounts do
+          post '/sign_in' => 'sessions#create'
+          delete '/sign_out' => 'sessions#destroy'
           resources :confirmations, only: [:show], path: 'confirmation'
         end
 

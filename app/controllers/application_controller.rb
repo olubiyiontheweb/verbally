@@ -33,37 +33,39 @@ class ApplicationController < ActionController::API
   def validate_token(account)
     # token
     if request.headers['Authorization'].blank?
-      validation_error(account, 'Unauthorized access, no token provided')
+      token_validation_response(account, 'Unauthorized access, no token provided', 'false')
     else
       pub_token = request.headers['Authorization']
       priv_token = Digest::SHA1.hexdigest pub_token
       @token = AuthenticationToken.find_by_token(priv_token) if AuthenticationToken.find_by_token(priv_token).present?
+      # puts priv_token
       if @token.present? && @token.account_id == account.id && account.active_for_authentication?
+        # check if token has expired for new token
         if (Date.today - @token.created_at).to_i >= @token.expires_in
           @token.delete
           generate_token(account)
         end
         # update last used at
         @token.update_attributes(last_used_at: Time.now.to_s)
+        token_validation_response(account, 'Token validated', 'true')
       else
-        'Invalid authorization token, authentication failed!'
-        # validation_error(account, 'Invalid authorization token, authentication failed!')
+        token_validation_response(account, 'Invalid authorization token, authentication failed!', 'false')
       end
     end
   end
 
   def delete_token(account)
     if request.headers['Authorization'].blank?
-      validation_error(account, 'Unauthorized access, no token provided')
+      token_validation_response(account, 'Unauthorized access, no token provided', 'false')
     else
       pub_token = request.headers['Authorization']
       priv_token = Digest::SHA1.hexdigest pub_token
       @token = AuthenticationToken.find_by_token(priv_token) if AuthenticationToken.find_by_token(priv_token).present?
       if @token.present? && @token.account_id == account.id && account.active_for_authentication?
         @token.delete
-        render_resource(account, 'Token deleted successfully')
+        token_validation_response(account, 'Token deleted successfully', 'true')
       else
-        validation_error(account, 'Token does not exist, User already signed out')
+        token_validation_response(account, 'Token does not exist, User already signed out', 'false')
       end
     end
   end
@@ -94,6 +96,44 @@ class ApplicationController < ActionController::API
         is_success: false,
         data: message
       }, status: :unprocessable_entity
+    end
+  end
+
+  # show error response
+  def token_validation_response(resource, message, status)
+    if message.present?
+      unless resource.blank?
+        resource.errors.add(:base, message: message)
+        message = resource.errors.full_messages
+      end
+      { json: {
+        messages: message,
+        is_success: status,
+        data: message
+      }, status: :unprocessable_entity }
+    end
+  end
+
+  def validate_user_request_token
+    if request.headers['Authorization'].blank?
+      token_validation_response(account, 'Unauthorized access, no token provided', 'false')
+    else
+      pub_token = request.headers['Authorization']
+      priv_token = Digest::SHA1.hexdigest pub_token
+      @token = AuthenticationToken.find_by_token(priv_token) if AuthenticationToken.find_by_token(priv_token).present?
+      account = Account.find(@token.account_id)
+      if @token.present? && account.present? && account.active_for_authentication?
+        # check if token has expired for new token
+        if (Date.today - @token.created_at).to_i >= @token.expires_in
+          @token.delete
+          generate_token(account)
+        end
+        # update last used at
+        @token.update_attributes(last_used_at: Time.now.to_s)
+        account
+      else
+        token_validation_response(account, 'Invalid authorization token, authentication failed!', 'false')
+      end
     end
   end
 

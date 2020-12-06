@@ -40,6 +40,11 @@ module Verbally
       g.orm :dynamoid
     end
 
+    ## load subdirectories of model, mailer, jobs folders
+    config.autoload_paths += Dir[Rails.root.join('app', 'jobs', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'mailers', '**/')]
+
     # config.middleware.insert_before 0, Rack::Cors do
     #   allow do
     #     origins '^(.*\.|)verbally\.com$', '127.0.0.1', 'localhost'
