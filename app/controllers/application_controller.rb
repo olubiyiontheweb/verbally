@@ -28,6 +28,7 @@ class ApplicationController < ActionController::API
     priv_token = Digest::SHA1.hexdigest token
     authtoken = AuthenticationToken.new(account_id: account.id, token: priv_token, expires_in: 30)
     authtoken.save
+    token
   end
 
   def validate_token(account)
@@ -43,11 +44,11 @@ class ApplicationController < ActionController::API
         # check if token has expired for new token
         if (Date.today - @token.created_at).to_i >= @token.expires_in
           @token.delete
-          generate_token(account)
+          pub_token = generate_token(account)
         end
         # update last used at
         @token.update_attributes(last_used_at: Time.now.to_s)
-        token_validation_response(account, 'Token validated', 'true')
+        token_validation_response(account, 'Token validated', 'true', pub_token)
       else
         token_validation_response(account, 'Invalid authorization token, authentication failed!', 'false')
       end
@@ -71,12 +72,14 @@ class ApplicationController < ActionController::API
   end
 
   # show success reponse
-  def render_resource(resource, message)
+  def render_resource(resource, message, token)
     if resource.errors.empty?
+      token = "" if token.blank?
       render json: {
         messages: message,
         is_success: true,
-        data: resource
+        data: resource,
+        authorization: token
       }, status: :ok
     else
       validation_error(resource, message)
@@ -100,20 +103,24 @@ class ApplicationController < ActionController::API
   end
 
   # show error response
-  def token_validation_response(resource, message, status)
+  def token_validation_response(resource, message, status, token)
     if message.present?
       unless resource.blank?
         resource.errors.add(:base, message: message)
         message = resource.errors.full_messages
       end
+
+      token = "" if token.blank?
       { json: {
         messages: message,
         is_success: status,
-        data: message
+        data: message,
+        authorization: token
       }, status: :unprocessable_entity }
     end
   end
 
+  # return token username
   def validate_user_request_token
     if request.headers['Authorization'].blank?
       token_validation_response(account, 'Unauthorized access, no token provided', 'false')
@@ -126,11 +133,11 @@ class ApplicationController < ActionController::API
         # check if token has expired for new token
         if (Date.today - @token.created_at).to_i >= @token.expires_in
           @token.delete
-          generate_token(account)
+          pub_token = generate_token(account)
         end
         # update last used at
         @token.update_attributes(last_used_at: Time.now.to_s)
-        account
+        return account, pub_token
       else
         token_validation_response(account, 'Invalid authorization token, authentication failed!', 'false')
       end

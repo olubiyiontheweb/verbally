@@ -6,14 +6,14 @@ class Api::V1::Accounts::RegistrationsController < Devise::RegistrationsControll
   def create
     account = Account.new(sign_up_params)
     if account.save
-      generate_token(account)
-      render_resource(account, 'Sign Up Successfully')
+      token = generate_token(account)
+      render_resource(account, 'Sign Up Successfully', token)
     else
       validation_error(account, 'Empty parameter submitted, Sign Up Failed')
     end
   end
 
-  # DELETE /resource
+  # DELETE /resource 
   def cancel
     account = Account.new(sign_up_params)
     token_response = {}

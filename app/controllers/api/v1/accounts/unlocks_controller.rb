@@ -6,7 +6,7 @@ class Api::V1::Accounts::UnlocksController < Devise::UnlocksController
   #   super
   # end
 
-  # POST /resource/unlock
+  # POST /resource/unlock 
   # def create
   #   super
   # end

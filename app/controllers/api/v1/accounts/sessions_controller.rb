@@ -4,7 +4,7 @@ class Api::V1::Accounts::SessionsController < ApplicationController
   before_action :ensure_params_exist
 
   def create
-    # sign account, check valid password and email details
+    # sign account, check valid password and email details 
     account = Account.new(sign_in_params)
 
     if Account.find_by_email(account.email).present?
@@ -15,8 +15,8 @@ class Api::V1::Accounts::SessionsController < ApplicationController
 
     if @accountdet.present? && @accountdet.valid_password?(account.password) && @accountdet.active_for_authentication?
       sign_in @accountdet, event: :authentication
-      generate_token(@accountdet)
-      render_resource(@accountdet, 'Account signedin successfully')
+      token = generate_token(@accountdet)
+      render_resource(@accountdet, 'Account signedin successfully', token)
     else
       validation_error(account, 'email or password incorrect, signin failed')
     end

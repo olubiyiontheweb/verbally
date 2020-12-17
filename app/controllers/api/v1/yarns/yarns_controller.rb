@@ -43,7 +43,7 @@ class Api::V1::Yarns::YarnsController < ApplicationController
   end
 
   def create
-    account = validate_user_request_token
+    account, pub_token = validate_user_request_token
     yarn = Yarn.new(yarn_params)
     yarn.account_id = account.id
     yarn_content = YarnContent.new(yarn_params[:yarn_contents_attributes])
@@ -55,7 +55,8 @@ class Api::V1::Yarns::YarnsController < ApplicationController
         render json: {
           yarn: yarn,
           is_success: true,
-          contents: yarn_content
+          contents: yarn_content,
+          authorization: pub_token
         }, status: :ok
       end
     else
