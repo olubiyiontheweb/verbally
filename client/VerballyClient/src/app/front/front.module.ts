@@ -16,6 +16,6 @@ import { HeaderLgComponent } from '../header-lg/header-lg.component';
     IonicModule,
     FrontPageRoutingModule,
   ],
-  declarations: [FrontPage]
+  declarations: [FrontPage, HeaderLgComponent]
 })
 export class FrontPageModule { }
