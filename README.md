@@ -51,9 +51,7 @@ It's live at http://localhost:3000
 
 Open a new terminal and run the following commands
 
->cd client/VerballyClient/
-
->ionic serve -l
+>cd client/VerballyClient/ && ionic serve -l
 
 Client application is live at http://localhost:8100
 
