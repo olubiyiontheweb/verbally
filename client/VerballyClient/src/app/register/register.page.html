@@ -1,29 +1,6 @@
-<ion-header>
-  <ion-toolbar class="ion-no-padding">
+<ion-content class="ion-padding">
 
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/front"></ion-back-button>
-    </ion-buttons>
-
-    <ion-title slot="start">
-      Signup
-    </ion-title>
-
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-  <!-- <ion-grid>
-
-    <ion-row>
-      <ion-col>
-        Just few steps aways a way from having an acount
-      </ion-col>
-    </ion-row>
-
-  </ion-grid> -->
-
+  <app-header-lg [headerObject]="headerObject"></app-header-lg>
   <ion-card>
     <ion-card-content>
 
@@ -87,8 +64,8 @@
         </ion-item>
 
         <ion-item lines="none">
-          <ion-label>Accept terms and conditions:</ion-label>
-          <ion-checkbox formControlName="accept_terms_condition"></ion-checkbox>
+          <ion-label>Terms and conditions:</ion-label>
+          <ion-checkbox formControlName="accept_terms_condition" color="green"></ion-checkbox>
           <div *ngIf="submitted && getFormControl.accept_terms_condition.errors" class="danger">
             <div *ngIf="getFormControl.accept_terms_condition.errors.required">Terms and conditions is
               required</div>
@@ -98,7 +75,7 @@
 
         <ion-row>
           <ion-col class="ion-float-left">
-            <ion-button color="success" class="btn-store" expand="block" (click)="registerUser()">
+            <ion-button color="green" class="btn-store" expand="block" (click)="registerAccount()">
               Signup
             </ion-button>
           </ion-col>
@@ -111,6 +88,7 @@
         </ion-row>
 
       </form>
+
     </ion-card-content>
   </ion-card>
 

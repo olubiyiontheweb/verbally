@@ -24,3 +24,12 @@ ion-slides {
     justify-content: space-between;
     align-items: center;
 }
+
+.search-bar {
+    position: absolute;
+    top: 13px;
+    z-index: 1;
+    width: 75%;
+    z-index: 1;
+    left: 25%;
+}

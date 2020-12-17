@@ -1,14 +1,14 @@
-.ion-float-left {
-    .btn-store {
-        width: 100%;
-    }
+ion-slides {
+    height: 60%;
 }
 
-.ion-float-right {
-    @extend .ion-float-left;
+.swiper-slide img {
+    height: 150px;
+    max-width: 80%;
+    margin: 20px 0 20px;
+    pointer-events: none;
 }
 
-iframe.y-tube {
-    width: 100%;
-    display: block;
+.get-started {
+    color: var(--ion-text-color, #fff);
 }

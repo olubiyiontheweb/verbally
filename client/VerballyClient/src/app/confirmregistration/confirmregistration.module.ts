@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ConfirmregistrationPageRoutingModule } from './confirmregistration-routing.module';
 
 import { ConfirmregistrationPage } from './confirmregistration.page';
+import { HeaderLgComponent } from '../header-lg/header-lg.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ConfirmregistrationPage } from './confirmregistration.page';
     IonicModule,
     ConfirmregistrationPageRoutingModule
   ],
-  declarations: [ConfirmregistrationPage]
+  declarations: [ConfirmregistrationPage, HeaderLgComponent]
 })
-export class ConfirmregistrationPageModule {}
+export class ConfirmregistrationPageModule { }

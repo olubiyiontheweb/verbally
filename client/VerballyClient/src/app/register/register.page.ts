@@ -17,19 +17,26 @@ export class RegisterPage implements OnInit {
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   formattedDate;
   redirect = [];
+  headerObject = [{
+    'title': 'Verbally',
+    'subTitle': 'Just one click away'
+  }];
 
   constructor(
     private formBuilder: FormBuilder,
     private serviceService: ServiceService,
     private alertService: AlertService,
     private cdref: ChangeDetectorRef
-  ) { }
+  ) {
+
+  }
 
   get getFormControl() {
     return this.registerForm.controls;
   }
 
   ngOnInit() {
+
     this.registerForm = this.formBuilder.group({
       first_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
@@ -68,7 +75,7 @@ export class RegisterPage implements OnInit {
   }
 
 
-  registerUser() {
+  registerAccount() {
     this.submitted = true;
 
     if (this.registerForm.invalid == true) {
@@ -77,7 +84,7 @@ export class RegisterPage implements OnInit {
     else {
 
       let formData = JSON.stringify({
-        "user": {
+        "account": {
           first_name: this.getFormControl.first_name.value.trim(),
           email: this.getFormControl.email.value.trim(),
           username: this.getFormControl.username.value.trim(),
@@ -88,7 +95,7 @@ export class RegisterPage implements OnInit {
         }
       });
 
-      this.serviceService.registerUsers(formData).pipe(take(1))
+      this.serviceService.registerAccount(formData).pipe(take(1))
         .subscribe((response) => {
           this.redirect[0] = '/tabs/front';
           if (response) {

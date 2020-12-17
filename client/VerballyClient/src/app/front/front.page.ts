@@ -8,7 +8,14 @@ import { Router } from '@angular/router';
 })
 export class FrontPage implements OnInit {
 
-  constructor(private router: Router) { }
+  headerObject = [{
+    'title': 'Verbally',
+    'subTitle': 'Yarn like never before'
+  }];
+
+  constructor(private router: Router) {
+
+  }
 
   ngOnInit() {
   }

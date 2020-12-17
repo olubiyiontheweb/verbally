@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { IonicStorageModule } from '@ionic/storage';
+import { ServiceAuthGuardService } from '../services/service-auth-guard.service';
+
 
 import { TabsPage } from './tabs.page';
 
@@ -15,15 +16,8 @@ const routes: Routes = [
       },
       {
         path: 'collection',
+
         loadChildren: () => import('../collection/collection.module').then(m => m.CollectionPageModule)
-      },
-      {
-        path: 'post',
-        loadChildren: () => import('../post/post.module').then(m => m.PostPageModule)
-      },
-      {
-        path: 'share',
-        loadChildren: () => import('../share/share-routing.module').then(m => m.SharePageRoutingModule)
       },
       {
         path: 'register',
@@ -35,6 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'confirmations/:confirmation_token',
+        canActivate: [ServiceAuthGuardService],
         loadChildren: () => import('../confirmregistration/confirmregistration.module').then(m => m.ConfirmregistrationPageModule)
       }
 
@@ -48,7 +43,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), IonicStorageModule.forRoot()],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class TabsPageRoutingModule { }

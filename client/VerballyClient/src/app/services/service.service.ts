@@ -30,8 +30,8 @@ export class ServiceService {
     return throwError(result.error)
   }
 
-  registerUsers(object) {
-    let endPoint = "api/v1/users";
+  registerAccount(object) {
+    let endPoint = "api/v1/accounts";
     return this.http
       .post(this.API_URL + endPoint, object, {
         headers: { 'Content-Type': 'application/json' }
@@ -43,7 +43,17 @@ export class ServiceService {
   }
 
   userLogin(object) {
-    let endPoint = "api/v1/users/sign_in";
+    let endPoint = "api/v1/accounts/sign_in";
+    return this.http.post(this.API_URL + endPoint, object, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .pipe(map(this.extractData),
+        catchError(this.handleError)
+      )
+  }
+
+  userLogOut(object) {
+    let endPoint = "api/v1/accounts/sign_out";
     return this.http.post(this.API_URL + endPoint, object, {
       headers: { 'Content-Type': 'application/json' }
     })
@@ -53,7 +63,7 @@ export class ServiceService {
   }
 
   userAccountConfirmation(formData) {
-    let endPoint = "api/v1/users/confirmations/" + formData;
+    let endPoint = "api/v1/accounts/confirmations/" + formData;
     return this.http
       .get(this.API_URL + endPoint, {
         headers: { 'Content-Type': 'application/json' }

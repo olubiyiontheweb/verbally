@@ -3,6 +3,9 @@ import { ServiceService } from '../services/service.service';
 import { take } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../services/alert.service';
+import { AuthServicesService } from '../services/auth-services.service';
+import { EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-login',
@@ -13,10 +16,16 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   redirect = [];
+  headerObject = [{
+    'title': 'Verbally',
+    'subTitle': 'Welcome back'
+  }];
+
 
   constructor(private service: ServiceService,
     private formBuilder: FormBuilder,
-    private alert: AlertService) { }
+    private alert: AlertService,
+    private authServicesService: AuthServicesService) { }
 
   get getFormControl() {
     return this.loginForm.controls;
@@ -40,6 +49,7 @@ export class LoginPage implements OnInit {
     this.service.userLogin(formData).pipe(take(1))
       .subscribe((response) => {
         if (response) {
+          this.authServicesService.setToken('123456');
           this.redirect[0] = '/tabs/collection';
           this.alert.presentAlert(response, this.redirect);
         }

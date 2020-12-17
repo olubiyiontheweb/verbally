@@ -14,6 +14,10 @@ import { take } from 'rxjs/operators';
 export class ConfirmregistrationPage implements OnInit {
   confirmationToken: any;
   redirect = [];
+  headerObject = [{
+    'title': 'Verbally',
+    'subTitle': 'Voila! Yarning just got better'
+  }];
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -23,7 +27,7 @@ export class ConfirmregistrationPage implements OnInit {
 
   ngOnInit() {
     let customCss = 'custom-class custom-loading';
-    let message = 'Confirmation in progress...';
+    let message = 'Account confirmation in progress...';
     this.loaderService.showLoader(message, customCss);
     this.extractUserCode();
   }

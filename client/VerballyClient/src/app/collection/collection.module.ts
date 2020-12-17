@@ -9,6 +9,7 @@ import { CollectionPageRoutingModule } from './collection-routing.module';
 import { CollectionPage } from './collection.page';
 
 import { PipesModule } from '../pipe.module';
+import { HeaderLgComponent } from '../header-lg/header-lg.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { PipesModule } from '../pipe.module';
     PipesModule,
     CollectionPageRoutingModule
   ],
-  declarations: [CollectionPage]
+  declarations: [CollectionPage, HeaderLgComponent]
 })
 export class CollectionPageModule { }

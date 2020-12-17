@@ -93,6 +93,11 @@ export class CollectionPage implements OnInit {
     grabCursor: true
   };
 
+  headerObject = [{
+    //'title': 'Verbally',
+    // 'subTitle': 'Yarn like never before'
+  }];
+
   constructor() { }
 
   ngOnInit() {

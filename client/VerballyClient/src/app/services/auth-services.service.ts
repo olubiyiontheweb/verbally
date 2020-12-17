@@ -1,16 +1,22 @@
 
 import { Platform } from '@ionic/angular';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Storage } from '@ionic/storage';
 
-const TOKEN_KEY = 'auth-token';
+export class AuthServicesServiceEvent {
+  message: string;
+  token: number;
+}
+
+const TOKEN_KEY = 'Authorization';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServicesService {
   authenticationState = new BehaviorSubject(false);
+  public onChange: EventEmitter<AuthServicesServiceEvent> = new EventEmitter<AuthServicesServiceEvent>();
   constructor(private storage: Storage, private plt: Platform) {
     this.plt.ready().then(() => {
       this.checkToken();
@@ -18,6 +24,7 @@ export class AuthServicesService {
   }
 
   setToken(token) {
+    this.onChange.emit({ message: 'tokenUpdate', token: token });
     return this.storage.set(TOKEN_KEY, token);
   }
 
@@ -27,6 +34,12 @@ export class AuthServicesService {
         this.authenticationState.next(true);
       }
     })
+  }
+
+  login() {
+    return this.storage.set(TOKEN_KEY, 'Bearer 1234567').then(() => {
+      this.authenticationState.next(true);
+    });
   }
 
   logout() {

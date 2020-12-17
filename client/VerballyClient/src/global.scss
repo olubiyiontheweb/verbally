@@ -34,3 +34,36 @@
     --ion-color-shade: var(--ion-color-green-shade);
     --ion-color-tint: var(--ion-color-green-tint);
 }
+
+h2 {
+    font-weight: 500;
+    font-size: 2em;
+    color: var(--ion-color-step-600, #60646b);
+    //margin: 0;
+}
+
+h5 {
+    font-weight: 300;
+    color: var(--ion-color-step-600, #60646b);
+}
+
+p {
+    line-height: 1.2em;
+    color: var(--ion-color-step-600, #60646b);
+    letter-spacing: 0.4px;
+    font-size: 14px;
+    line-height: 1.5;
+    //margin: 0;
+}
+
+.swiper-slide {
+    display: block;
+}
+
+b {
+    font-weight: 500;
+}
+
+p b {
+    color: var(--ion-text-color, #000000);
+}

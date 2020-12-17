@@ -1,19 +1,5 @@
-<ion-header>
-  <ion-toolbar class="ion-no-padding">
-
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/front"></ion-back-button>
-    </ion-buttons>
-
-    <ion-title slot="start">
-      Signin
-    </ion-title>
-
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+  <app-header-lg [headerObject]="headerObject"></app-header-lg>
   <ion-card>
 
     <ion-card-content>
@@ -39,7 +25,7 @@
 
         <ion-row>
           <ion-col>
-            <ion-button color="success" expand="block" class="btn-store" (click)="userLogin()">
+            <ion-button color="green" expand="block" class="btn-store" (click)="userLogin()">
               Signin
             </ion-button>
           </ion-col>

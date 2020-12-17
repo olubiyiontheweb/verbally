@@ -7,14 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { FrontPageRoutingModule } from './front-routing.module';
 
 import { FrontPage } from './front.page';
+import { HeaderLgComponent } from '../header-lg/header-lg.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FrontPageRoutingModule
+    FrontPageRoutingModule,
   ],
   declarations: [FrontPage]
 })
-export class FrontPageModule {}
+export class FrontPageModule { }
