@@ -15,9 +15,16 @@ const routes: Routes = [
         loadChildren: () => import('../front/front.module').then(m => m.FrontPageModule)
       },
       {
-        path: 'collection',
-
-        loadChildren: () => import('../collection/collection.module').then(m => m.CollectionPageModule)
+        path: 'yarns',
+        loadChildren: () => import('../yarns/yarns.module').then(m => m.YarnsPageModule)
+      },
+      {
+        path: 'yarn',
+        loadChildren: () => import('../yarn/yarn.module').then(m => m.YarnPageModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
         path: 'register',
@@ -37,6 +44,11 @@ const routes: Routes = [
   },
   {
     path: '',
+    redirectTo: 'tabs/front',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
     redirectTo: 'tabs/front',
     pathMatch: 'full'
   }

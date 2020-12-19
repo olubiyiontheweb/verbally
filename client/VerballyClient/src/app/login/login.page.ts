@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../services/service.service';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../services/alert.service';
 import { AuthServicesService } from '../services/auth-services.service';
-import { EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,7 +25,8 @@ export class LoginPage implements OnInit {
   constructor(private service: ServiceService,
     private formBuilder: FormBuilder,
     private alert: AlertService,
-    private authServicesService: AuthServicesService) { }
+    private authServicesService: AuthServicesService,
+    private router: Router) { }
 
   get getFormControl() {
     return this.loginForm.controls;
@@ -46,14 +47,16 @@ export class LoginPage implements OnInit {
       "password": this.getFormControl.password.value.trim()
     });
 
-    this.service.userLogin(formData).pipe(take(1))
-      .subscribe((response) => {
-        if (response) {
-          this.authServicesService.setToken('123456');
-          this.redirect[0] = '/tabs/collection';
-          this.alert.presentAlert(response, this.redirect);
-        }
-      });
+    this.service.userLogin(formData).pipe(map((response: any) => response)).subscribe((res) => {
+      if (res && res['authorization'] && res['is_success']) {
+        this.authServicesService.setToken(res['authorization']);
+        this.router.navigate(['/tabs/yarns'])
+      }
+    }, err => {
+      this.redirect[0] = '/tabs/front';
+      this.alert.presentAlert(err.error.data, this.redirect);
+    })
+
   }
 
 }

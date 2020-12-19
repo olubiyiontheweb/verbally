@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FrontPageRoutingModule } from './front-routing.module';
+import { YarnPageRoutingModule } from './yarn-routing.module';
 
-import { FrontPage } from './front.page';
+import { YarnPage } from './yarn.page';
 import { SharedModuleModule } from '../shared-module/shared-module.module';
-
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ReactiveFormsModule,
     SharedModuleModule,
-    FrontPageRoutingModule,
+    YarnPageRoutingModule
   ],
-  declarations: [FrontPage]
+  declarations: [YarnPage]
 })
-export class FrontPageModule { }
+export class YarnPageModule { }

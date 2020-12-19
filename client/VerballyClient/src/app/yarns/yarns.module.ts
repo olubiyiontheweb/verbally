@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ConfirmregistrationPageRoutingModule } from './confirmregistration-routing.module';
+import { YarnsPageRoutingModule } from './yarns-routing.module';
 
-import { ConfirmregistrationPage } from './confirmregistration.page';
+import { YarnsPage } from './yarns.page';
 import { SharedModuleModule } from '../shared-module/shared-module.module';
-
 
 @NgModule({
   imports: [
@@ -16,8 +15,8 @@ import { SharedModuleModule } from '../shared-module/shared-module.module';
     FormsModule,
     IonicModule,
     SharedModuleModule,
-    ConfirmregistrationPageRoutingModule
+    YarnsPageRoutingModule
   ],
-  declarations: [ConfirmregistrationPage]
+  declarations: [YarnsPage]
 })
-export class ConfirmregistrationPageModule { }
+export class YarnsPageModule { }

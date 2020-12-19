@@ -27,7 +27,7 @@ export class ServiceService {
     // TODO: better job of transforming error for user consumption
     console.log(`failed: ${result.message}`);
 
-    return throwError(result.error)
+    return throwError(result)
   }
 
   registerAccount(object) {

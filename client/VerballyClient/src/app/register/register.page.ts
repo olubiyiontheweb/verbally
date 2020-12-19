@@ -4,6 +4,7 @@ import { NgForm, FormGroup, FormControl, Validators, FormBuilder } from '@angula
 import { take } from 'rxjs/operators';
 import { ServiceService } from '../services/service.service';
 import { AlertService } from '../services/alert.service';
+import { AuthServicesService } from '../services/auth-services.service';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,8 @@ export class RegisterPage implements OnInit {
     private formBuilder: FormBuilder,
     private serviceService: ServiceService,
     private alertService: AlertService,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private authServicesService: AuthServicesService
   ) {
 
   }
@@ -99,10 +101,12 @@ export class RegisterPage implements OnInit {
         .subscribe((response) => {
           this.redirect[0] = '/tabs/front';
           if (response) {
+            this.authServicesService.setToken(response['authorization']);
             this.alertService.presentAlert(response, this.redirect);
           }
         }, (error) => {
-          this.alertService.presentAlert(error, '');
+          this.redirect[1] = '/tabs/register';
+          this.alertService.presentAlert(error, this.redirect);
         });
     }
   }

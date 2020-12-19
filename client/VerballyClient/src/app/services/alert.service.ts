@@ -14,12 +14,12 @@ export class AlertService {
 
   async presentAlert(message, redirect) {
     let messageAlert = "";
-    let isSuccess = message.is_success;
+    let isSuccess = message ? message.is_success : message;
     if (isSuccess !== undefined && isSuccess == true) {
-      messageAlert = message.messages;
+      messageAlert = message ? message.messages : message.data;
     }
     else {
-      messageAlert = message.messages;
+      messageAlert = message ? message.messages : message.data;
     }
     const alert = await this.alertCtrl.create({
       header: 'Alert',

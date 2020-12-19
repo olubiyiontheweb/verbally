@@ -1,0 +1,39 @@
+<ion-content>
+
+  <app-header-shared [headerObject]="headerObject"></app-header-shared>
+  <ion-card>
+
+    <ion-card-content>
+
+      <form [formGroup]="yarnForm">
+
+        <ion-item lines="none">
+          <ion-label position="floating">Tags:</ion-label>
+          <ion-input type="tags" formControlName="tags"></ion-input>
+          <div *ngIf="submitted && getFormControl.tags.errors" class="danger">
+            <div *ngIf="getFormControl.tags.errors.required" color="danger">Password is required</div>
+          </div>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Description:</ion-label>
+          <ion-textarea rows="6" cols="20" formControlName="yarn"></ion-textarea>
+          <div *ngIf="submitted && getFormControl.yarn.errors" class="danger">
+            <div *ngIf="getFormControl.yarn.errors.required" color="danger">Yarn is required</div>
+          </div>
+        </ion-item>
+
+        <ion-row>
+          <ion-col>
+            <ion-button color="green" expand="block" class="btn-store" (click)="createYarn()">
+              Create
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,17 @@
+<ion-content class="ion-padding">
+  <app-header-shared [headerObject]="headerObject"></app-header-shared>
+  <div class="list card">
+    <ion-item class="profile-item">
+      <div class="profile-picture big-profile-picture">
+        <img src="{{bannerImages.url}}">
+      </div>
+      <!-- <h2 class="profile-name dark">{{user.name}}</h2>
+      <div class="profile-info">{{user.info}}</div> -->
+    </ion-item>
+    <ion-item class="profile-item">
+      <button class="button button-block button-positive" ng-click="logIn()">
+        Login
+      </button>
+    </ion-item>
+  </div>
+</ion-content>

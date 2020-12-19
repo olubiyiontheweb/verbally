@@ -9,7 +9,7 @@ import { RegisterPageRoutingModule } from './register-routing.module';
 import { RegisterPage } from './register.page';
 
 import { ObjectFilterPipe } from '../object-filter.pipe';
-import { HeaderLgComponent } from '../header-lg/header-lg.component';
+import { SharedModuleModule } from '../shared-module/shared-module.module';
 
 @NgModule({
   imports: [
@@ -17,8 +17,9 @@ import { HeaderLgComponent } from '../header-lg/header-lg.component';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    SharedModuleModule,
     RegisterPageRoutingModule
   ],
-  declarations: [RegisterPage, ObjectFilterPipe, HeaderLgComponent]
+  declarations: [RegisterPage, ObjectFilterPipe]
 })
 export class RegisterPageModule { }

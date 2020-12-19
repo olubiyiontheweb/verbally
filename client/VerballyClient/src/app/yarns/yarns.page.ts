@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-collection',
-  templateUrl: './collection.page.html',
-  styleUrls: ['./collection.page.scss'],
+  selector: 'app-yarns',
+  templateUrl: './yarns.page.html',
+  styleUrls: ['./yarns.page.scss'],
 })
-export class CollectionPage implements OnInit {
+export class YarnsPage implements OnInit {
 
   bannerImages = [
     {

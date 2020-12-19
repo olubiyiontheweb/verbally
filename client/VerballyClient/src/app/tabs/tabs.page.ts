@@ -14,7 +14,7 @@ export class TabsPage implements OnInit {
       icon: 'home-outline'
     },
     {
-      tab: 'collection',
+      tab: 'yarns',
       name: 'Yarns',
       icon: 'play-circle-outline'
     },
@@ -42,7 +42,7 @@ export class TabsPage implements OnInit {
   setTabMenuObject() {
     this.menuTabObject = [
       {
-        tab: 'collection',
+        tab: 'yarns',
         name: 'Yarns',
         icon: 'play-circle-outline'
       },

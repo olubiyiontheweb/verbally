@@ -33,7 +33,7 @@ export class AppComponent {
       //     this.router.navigate(['tabs/front'])
       //   }
       //   else {
-      //     this.router.navigate(['tabs/collection'])
+      //     this.router.navigate(['tabs/yarns'])
       //   }
       // })
     });

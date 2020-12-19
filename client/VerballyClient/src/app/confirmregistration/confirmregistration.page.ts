@@ -38,7 +38,7 @@ export class ConfirmregistrationPage implements OnInit {
       .subscribe((response) => {
         console.log(response.is_success);
         this.loaderService.hideLoader();
-        this.redirect[0] = '/tabs/collection';
+        this.redirect[0] = '/tabs/yarns';
         this.alertService.presentAlert(response, this.redirect);
       });
   }
