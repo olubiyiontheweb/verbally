@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
       }
     }, err => {
       this.redirect[0] = '/tabs/front';
-      this.alert.presentAlert(err.error.data, this.redirect);
+      this.alert.presentAlert(err.error, this.redirect);
     })
 
   }

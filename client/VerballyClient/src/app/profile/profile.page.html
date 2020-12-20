@@ -1,17 +1,102 @@
-<ion-content class="ion-padding">
-  <app-header-shared [headerObject]="headerObject"></app-header-shared>
-  <div class="list card">
-    <ion-item class="profile-item">
-      <div class="profile-picture big-profile-picture">
-        <img src="{{bannerImages.url}}">
-      </div>
-      <!-- <h2 class="profile-name dark">{{user.name}}</h2>
-      <div class="profile-info">{{user.info}}</div> -->
-    </ion-item>
-    <ion-item class="profile-item">
-      <button class="button button-block button-positive" ng-click="logIn()">
-        Login
-      </button>
-    </ion-item>
-  </div>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Joshua IwuGod</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="profile-wrap">
+          <img class="header-content" (click)="changeRoute()" src="../../assets/icon/favicon.png" alt="">
+          <div><span>@</span><span>iwugod</span></div>
+          <div class="social-numbers">
+            <div class="following">
+              <div>
+                376
+              </div>
+              <div>
+                Following
+              </div>
+            </div>
+            <div class="followers">
+              <div>
+                117.2K
+              </div>
+              <div>
+                Followers
+              </div>
+            </div>
+            <div class="likes">
+              <div>
+                1.6M
+              </div>
+              <div>
+                Likes
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="profile-btns">
+          <ion-button expand="block" fill="outline">Edit profile</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="profile-xtra">
+          <div>
+            Joshua IwuGod
+          </div>
+          <div>
+            CEO, mom, Social media manager, Following for fun
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+        <div class="submenu-link">
+          <div>
+            <ion-icon name="apps-outline"></ion-icon>
+          </div>
+          <div>
+            <ion-icon name="heart-circle-outline"></ion-icon>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col *ngFor="let item of itemCatergory; let i = index">
+
+        <ion-slides [options]="slideOptsTwo">
+          <ion-slide *ngFor="let card of itemCatergory[i].id;"
+            style="width: 150px; height: 100px; border: 2px solid #f8f8f8">
+            <ion-col>
+              <ion-label>{{ card.title }}</ion-label>
+              <ion-img style="pointer-events:none" src={{card.url}}></ion-img>
+            </ion-col>
+          </ion-slide>
+        </ion-slides>
+
+
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
 </ion-content>
