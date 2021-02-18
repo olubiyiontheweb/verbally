@@ -1,39 +1,27 @@
 <ion-content>
 
   <app-header-shared [headerObject]="headerObject"></app-header-shared>
-  <ion-card>
 
-    <ion-card-content>
+  <ion-list>
+    <ion-item *ngFor="let audio of audioList; index as i;">
+      <p>{{audio.name}}</p>
+      <button ion-button clear item-end large tappable (click)="playAudio(i)">
+        <ion-icon name="play"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
 
-      <form [formGroup]="yarnForm">
+  <ion-fab vertical="center" (click)="record()" horizontal="center" slot="fixed" *ngIf="!recording">
+    <ion-fab-button>
+      <ion-icon name="mic-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-        <ion-item lines="none">
-          <ion-label position="floating">Tags:</ion-label>
-          <ion-input type="tags" formControlName="tags"></ion-input>
-          <div *ngIf="submitted && getFormControl.tags.errors" class="danger">
-            <div *ngIf="getFormControl.tags.errors.required" color="danger">Password is required</div>
-          </div>
-        </ion-item>
+  <ion-fab vertical="center" (click)="stopRecord()" horizontal="center" slot="fixed" *ngIf="recording">
+    <ion-fab-button>
+      <ion-icon name="stop-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-        <ion-item lines="none">
-          <ion-label position="floating">Description:</ion-label>
-          <ion-textarea rows="6" cols="20" formControlName="yarn"></ion-textarea>
-          <div *ngIf="submitted && getFormControl.yarn.errors" class="danger">
-            <div *ngIf="getFormControl.yarn.errors.required" color="danger">Yarn is required</div>
-          </div>
-        </ion-item>
-
-        <ion-row>
-          <ion-col>
-            <ion-button color="green" expand="block" class="btn-store" (click)="createYarn()">
-              Create
-            </ion-button>
-          </ion-col>
-        </ion-row>
-
-      </form>
-
-    </ion-card-content>
-  </ion-card>
 
 </ion-content>

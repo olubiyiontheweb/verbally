@@ -7,6 +7,12 @@ import { AuthServicesService } from '../services/auth-services.service';
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
+  //Remember to remove 
+  // {
+  //   tab: 'yarn',
+  //   name: 'Yarn',
+  //   icon: 'add-circle-outline'
+  // },
   menuTabObject = [
     {
       tab: 'front',
@@ -18,6 +24,11 @@ export class TabsPage implements OnInit {
       name: 'Yarns',
       icon: 'play-circle-outline'
     },
+    {
+      tab: 'yarn',
+      name: 'Yarn',
+      icon: 'add-circle-outline'
+    }
   ];
   accountLoginStatus: boolean;
   private _authServiceSubscription;

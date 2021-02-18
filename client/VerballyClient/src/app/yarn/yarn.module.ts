@@ -9,6 +9,8 @@ import { YarnPageRoutingModule } from './yarn-routing.module';
 import { YarnPage } from './yarn.page';
 import { SharedModuleModule } from '../shared-module/shared-module.module';
 
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +20,7 @@ import { SharedModuleModule } from '../shared-module/shared-module.module';
     SharedModuleModule,
     YarnPageRoutingModule
   ],
-  declarations: [YarnPage]
+  declarations: [YarnPage],
+  providers: []
 })
 export class YarnPageModule { }

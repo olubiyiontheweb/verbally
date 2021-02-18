@@ -1,7 +1,8 @@
 {
   "name": "VerballyClient",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

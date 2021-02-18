@@ -15,6 +15,11 @@ import { IonicStorageModule } from '@ionic/storage';
 import { ServicesInterceptorService } from './services/services-interceptor.service';
 import { SharedModuleModule } from './shared-module/shared-module.module';
 
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { Media } from '@ionic-native/media/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +35,12 @@ import { SharedModuleModule } from './shared-module/shared-module.module';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: ServicesInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ServicesInterceptorService, multi: true },
+    Media,
+    File,
+    AndroidPermissions,
+    FileTransfer,
+    FileTransferObject
   ],
   bootstrap: [AppComponent]
 })
