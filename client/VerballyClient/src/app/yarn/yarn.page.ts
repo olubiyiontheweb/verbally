@@ -82,10 +82,6 @@ export class YarnPage {
     let ft = this.transfer.create();
     const url = encodeURI(this.file.externalDataDirectory + this.fileName);
 
-    if (this.fileName == undefined) {
-      this.fileName = 'verbally';
-      this.fileName.lastIndexOf('.mp3')
-    }
     let fn = this.file.dataDirectory + this.fileName;
     ft.download(url, fn).then(
       (fe: FileEntry) => {
