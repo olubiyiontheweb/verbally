@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
@@ -27,7 +27,6 @@ export class YarnPage {
   fileName: string;
   audio: MediaObject;
   audioList: any[] = [];
-  //folderPath = 'cdvfile://localhost/assets/voice'
 
   stringToWrite: string;
   blob: Blob;
@@ -40,23 +39,17 @@ export class YarnPage {
     private androidPermissions: AndroidPermissions,
     private transfer: FileTransfer,
     public platform: Platform,
+    private cdf: ChangeDetectorRef
   ) {
 
     this.platform.ready().then(() => {
       this.filePermission();
-      if (this.platform.is('ios')) {
-        console.log("ios");
-        this.filePath = this.file.tempDirectory.replace(/file:\/\//, '') + 'record.mp3';
-      } else if (this.platform.is('android')) {
-        this.filePath = this.file.externalDataDirectory.replace(/file:\/\//, '') + "record.mp3";
-        console.log("android");
-      }
     });
 
   }
 
   ionViewWillEnter() {
-    //this.displayRecords();
+    this.checkFileAvailable();
   }
 
   filePermission() {
@@ -70,18 +63,29 @@ export class YarnPage {
 
 
   record() {
-    this.fileName = "records.mp3";
+    if (this.platform.is('ios')) {
+      this.fileName = 'verbally' + new Date().getDate() + new Date().getFullYear() + new Date().getSeconds() + '.3gp';
+      this.filePath = this.file.tempDirectory.replace(/file:\/\//g, '') + this.fileName;
+    } else if (this.platform.is('android')) {
+      this.fileName = 'verbally' + new Date().getDate() + new Date().getFullYear() + new Date().getSeconds() + '.3gp';
+      this.filePath = this.file.externalDataDirectory.replace(/file:\/\//g, '') + this.fileName;
+    }
+
     this.file.createFile(this.filePath, this.fileName, true);
     this.audio = this.media.create(this.filePath);
     this.audio.startRecord();
     this.recording = true;
   }
 
-  displayRecords() {
-
+  downloadRecords() {
+    //Downloads records from file directory and load it to ionic
     let ft = this.transfer.create();
-    const url = encodeURI(this.file.externalDataDirectory + 'record.mp3');
+    const url = encodeURI(this.file.externalDataDirectory + this.fileName);
 
+    if (this.fileName == undefined) {
+      this.fileName = 'verbally';
+      this.fileName.lastIndexOf('.mp3')
+    }
     let fn = this.file.dataDirectory + this.fileName;
     ft.download(url, fn).then(
       (fe: FileEntry) => {
@@ -94,16 +98,46 @@ export class YarnPage {
     );
   }
 
+  checkFileAvailable() {
+    this.file.resolveLocalFilesystemUrl(this.file.dataDirectory)
+      .then((fileEntry: any) => {
+        this.audioList = [];
+        const reader = fileEntry.createReader();
+        reader.readEntries((enteries) => {
+
+          enteries.forEach(element => {
+            if (element.isFile === true) {
+              this.audioList.push({ name: element.name, url: element.toURL() });
+            }
+          });
+          this.cdf.detectChanges();
+        },
+          (err) => {
+            console.log(err)
+          }
+        )
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+
+  }
+
   stopRecord() {
     this.audio.stopRecord();
     this.audio.release();
     this.recording = false;
-    this.displayRecords();
+    this.downloadRecords();
   }
 
   playAudio(index) {
     this.audio = this.media.create(this.audioList[index].url);
-    this.audio.play();
+    this.audio.stop();
+    this.audio.release();
+    setTimeout(() => {
+      this.audio.play();
+    }, 300);
+
   }
 }
 
