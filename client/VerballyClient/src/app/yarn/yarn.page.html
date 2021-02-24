@@ -1,27 +1,42 @@
+<app-header-shared [headerObject]="headerObject"></app-header-shared>
+
 <ion-content>
+  <div class=set-bg>
 
-  <app-header-shared [headerObject]="headerObject"></app-header-shared>
+    <ion-item class="play-btn" *ngFor="let audio of audioList; index as i;" expand="block">
 
-  <ion-list>
-    <ion-item *ngFor="let audio of audioList; index as i;">
-      <p>{{audio.name}}</p>
-      <button ion-button clear item-end large tappable (click)="playAudio(i)">
-        <ion-icon name="play"></ion-icon>
-      </button>
+      <ion-avatar slot="start" tappable class="play-icons">
+        <ion-icon class="icon-person" name="person-circle-outline"></ion-icon>
+        <ion-icon class="icon-mic" name="mic-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label class="play-drt">
+        <ion-icon class="ply-btn" tappable (click)="playAudio(i, audio)" *ngIf="audio.audioIsPlaying == false"
+          name="play">
+        </ion-icon>
+        <ion-icon tappable (click)="pauseAudio(i, audio)" name="pause-outline" *ngIf="audio.audioIsPlaying == true">
+        </ion-icon>
+        <ion-progress-bar [value]="p_bar_value" [buffer]="p_bar_buffer" color="secondary"></ion-progress-bar>
+      </ion-label>
+
     </ion-item>
-  </ion-list>
 
-  <ion-fab vertical="center" (click)="record()" horizontal="center" slot="fixed" *ngIf="!recording">
-    <ion-fab-button>
+    <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </div>
+
+  <ion-fab vertical="bottom" (click)="record()" horizontal="end" slot="fixed" *ngIf="!recording">
+    <ion-fab-button color="green">
       <ion-icon name="mic-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <ion-fab vertical="center" (click)="stopRecord()" horizontal="center" slot="fixed" *ngIf="recording">
+  <ion-fab vertical="bottom" (click)="stopRecord()" horizontal="end" slot="fixed" *ngIf="recording">
     <ion-fab-button>
       <ion-icon name="stop-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 
 </ion-content>

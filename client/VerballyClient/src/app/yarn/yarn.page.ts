@@ -5,7 +5,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { File, FileEntry } from '@ionic-native/file/ngx';
 
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 
 @Component({
@@ -27,15 +27,16 @@ export class YarnPage {
   fileName: string;
   audio: MediaObject;
   audioList: any[] = [];
-
-  stringToWrite: string;
-  blob: Blob;
-  current_file_playing: any;
-  storageDirectory: any;
-  private win: any = window
+  duration: number = 0;
+  audioPlaying = false;
+  progress: number;
+  p_bar_value: number;
+  p_bar_buffer: number;
+  isPlayingAud: boolean = false;
 
   constructor(private media: Media,
     private file: File,
+    //private audio: MediaObject,
     private androidPermissions: AndroidPermissions,
     private transfer: FileTransfer,
     public platform: Platform,
@@ -50,6 +51,10 @@ export class YarnPage {
 
   ionViewWillEnter() {
     this.checkFileAvailable();
+    // this.audioList.push(
+    //   { name: "test", url: '../1.3gp' },
+    //   { name: "test1", url: '../1.3gp' }
+    // )
   }
 
   filePermission() {
@@ -86,7 +91,7 @@ export class YarnPage {
     ft.download(url, fn).then(
       (fe: FileEntry) => {
         this.audio = this.media.create(fe.nativeURL);
-        this.audioList.push({ name: this.fileName, url: fe.toURL() });
+        this.audioList.push({ name: this.fileName, url: fe.toURL(), audioIsPlaying: false });
       },
       err => {
         console.log(JSON.stringify(err));
@@ -103,7 +108,7 @@ export class YarnPage {
 
           enteries.forEach(element => {
             if (element.isFile === true) {
-              this.audioList.push({ name: element.name, url: element.toURL() });
+              this.audioList.push({ name: element.name, url: element.toURL(), audioIsPlaying: false });
             }
           });
           this.cdf.detectChanges();
@@ -116,24 +121,63 @@ export class YarnPage {
       .catch((err) => {
         console.log(err)
       });
-
   }
 
   stopRecord() {
     this.audio.stopRecord();
     this.audio.release();
     this.recording = false;
+    this.audioPlaying = false;
     this.downloadRecords();
+    this.audioList.map((ele, index) => {
+      ele.audioIsPlaying = false;
+    })
+    this.cdf.detectChanges();
   }
 
-  playAudio(index) {
-    this.audio = this.media.create(this.audioList[index].url);
-    this.audio.stop();
-    this.audio.release();
-    setTimeout(() => {
-      this.audio.play();
-    }, 300);
+  playAudio(index, audio) {
 
+    if (this.isPlayingAud == true) {
+      this.isPlayingAud = false;
+      this.audio.setVolume(0);
+      this.audio.pause();
+      this.audio.release();
+      this.cdf.detectChanges();
+    }
+    this.audio = this.media.create(audio.url);
+
+    this.audioList.map((ele, indx) => {
+      ele.audioIsPlaying = false;
+    })
+
+    this.audio.play();
+    this.isPlayingAud = true;
+    audio.audioIsPlaying = true;
+    this.cdf.detectChanges();
+    // Update media position every second
+    var mediaTimer = setInterval(() => {
+      // get media position
+      this.audio.getCurrentPosition()
+        .then((response) => {
+          // success callback
+          if ((Math.sign(response) == -1)) {
+            audio.audioIsPlaying = false;
+            // clear interval 
+            clearInterval(mediaTimer);
+            this.cdf.detectChanges();
+          }
+        })
+        .catch((error) => {
+          // error callback
+          console.error("Error getting pos= " + error);
+        });
+    }, 1000);
+  }
+
+  pauseAudio(i, audio) {
+    this.audio.pause();
+    this.cdf.detectChanges();
+    this.audio.release();
   }
 }
 

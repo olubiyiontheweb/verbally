@@ -1,10 +1,10 @@
+<app-header-shared [headerObject]="headerObject"></app-header-shared>
+
 <ion-content [fullscreen]="true" class="ion-padding">
-  <app-header-shared [headerObject]="headerObject"></app-header-shared>
 
-
-  <div class="search-bar">
+  <!-- <div class="search-bar">
     <ion-searchbar showCancelButton="focus"></ion-searchbar>
-  </div>
+  </div> -->
   <ion-slides pager="true" [options]="slideOpts">
     <ion-slide *ngFor="let bannerImg of bannerImages">
       <div class="img-wrap">

@@ -1,0 +1,44 @@
+::ng-deep .set-bg {
+
+    background: #edf4f7;
+    height: 50vh;
+
+    .play-btn {
+        display: flex;
+        align-items: center;
+
+    }
+
+    .play-icons {
+        .icon-person {
+            width: 40px;
+            margin: 0;
+            height: 40px;
+            z-index: 1;
+        }
+
+        .icon-mic {
+            position: absolute;
+            left: 40px;
+            z-index: 1;
+            bottom: 15px;
+            color: rgb(56, 55, 55);
+        }
+
+    }
+
+    .play-drt {
+        display: flex;
+        align-items: center;
+        z-index: 2;
+
+        .prog-bar {
+            width: 100%;
+        }
+
+        .ply-btn {
+            padding-right: 10px;
+            z-index: 1;
+        }
+    }
+}
