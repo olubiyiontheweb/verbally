@@ -1,26 +1,32 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import {
+  Component,
+  ChangeDetectorRef,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
+import { Platform } from "@ionic/angular";
+import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
 
-import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { File, FileEntry } from '@ionic-native/file/ngx';
+import { Media, MediaObject } from "@ionic-native/media/ngx";
+import { File, FileEntry } from "@ionic-native/file/ngx";
 
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-
+import { FileTransfer } from "@ionic-native/file-transfer/ngx";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-yarn',
-  templateUrl: './yarn.page.html',
-  styleUrls: ['./yarn.page.scss'],
+  selector: "app-yarn",
+  templateUrl: "./yarn.page.html",
+  styleUrls: ["./yarn.page.scss"],
 })
 export class YarnPage {
-
   submitted = false;
   redirect = [];
-  headerObject = [{
-    'title': 'Verbally',
-    'subTitle': 'Create yarns'
-  }];
+  headerObject = [
+    {
+      title: "Verbally",
+      subTitle: "Create yarns",
+    },
+  ];
 
   recording: boolean = false;
   filePath: string;
@@ -33,20 +39,31 @@ export class YarnPage {
   p_bar_value: number;
   p_bar_buffer: number;
   isPlayingAud: boolean = false;
+  @ViewChild("pressBtn") pressBtn: ElementRef;
+  selectedIndex: number;
 
-  constructor(private media: Media,
+  @ViewChild("button") button: ElementRef;
+  isLongPressed = false;
+  toggleYarnTitle = true;
+  toggleMenuOptions = false;
+  tempAudioEditFile = [];
+
+  constructor(
+    private media: Media,
     private file: File,
-    //private audio: MediaObject,
     private androidPermissions: AndroidPermissions,
     private transfer: FileTransfer,
     public platform: Platform,
-    private cdf: ChangeDetectorRef
+    private cdf: ChangeDetectorRef,
+    private router: Router
   ) {
-
     this.platform.ready().then(() => {
       this.filePermission();
     });
+  }
 
+  onMoveHandler($event) {
+    console.log($event);
   }
 
   ionViewWillEnter() {
@@ -58,22 +75,43 @@ export class YarnPage {
   }
 
   filePermission() {
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-      result => console.log('Has permission?', result.hasPermission),
-      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
-    );
+    this.androidPermissions
+      .checkPermission(
+        this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE
+      )
+      .then(
+        (result) => console.log("Has permission?", result.hasPermission),
+        (err) =>
+          this.androidPermissions.requestPermission(
+            this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE
+          )
+      );
 
-    this.androidPermissions.requestPermissions(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
+    this.androidPermissions.requestPermissions(
+      this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE
+    );
   }
 
-
   record() {
-    if (this.platform.is('ios')) {
-      this.fileName = 'verbally' + new Date().getDate() + new Date().getFullYear() + new Date().getSeconds() + '.3gp';
-      this.filePath = this.file.tempDirectory.replace(/file:\/\//g, '') + this.fileName;
-    } else if (this.platform.is('android')) {
-      this.fileName = 'verbally' + new Date().getDate() + new Date().getFullYear() + new Date().getSeconds() + '.3gp';
-      this.filePath = this.file.externalDataDirectory.replace(/file:\/\//g, '') + this.fileName;
+    if (this.platform.is("ios")) {
+      this.fileName =
+        "verbally" +
+        new Date().getDate() +
+        new Date().getFullYear() +
+        new Date().getSeconds() +
+        ".3gp";
+      this.filePath =
+        this.file.tempDirectory.replace(/file:\/\//g, "") + this.fileName;
+    } else if (this.platform.is("android")) {
+      this.fileName =
+        "verbally" +
+        new Date().getDate() +
+        new Date().getFullYear() +
+        new Date().getSeconds() +
+        ".3gp";
+      this.filePath =
+        this.file.externalDataDirectory.replace(/file:\/\//g, "") +
+        this.fileName;
     }
 
     this.file.createFile(this.filePath, this.fileName, true);
@@ -91,35 +129,46 @@ export class YarnPage {
     ft.download(url, fn).then(
       (fe: FileEntry) => {
         this.audio = this.media.create(fe.nativeURL);
-        this.audioList.push({ name: this.fileName, url: fe.toURL(), audioIsPlaying: false });
+        this.audioList.push({
+          name: this.fileName,
+          url: fe.toURL(),
+          audioIsPlaying: false,
+          progressBar: 0,
+        });
       },
-      err => {
+      (err) => {
         console.log(JSON.stringify(err));
       }
     );
   }
 
   checkFileAvailable() {
-    this.file.resolveLocalFilesystemUrl(this.file.dataDirectory)
+    this.file
+      .resolveLocalFilesystemUrl(this.file.dataDirectory)
       .then((fileEntry: any) => {
         this.audioList = [];
         const reader = fileEntry.createReader();
-        reader.readEntries((enteries) => {
-
-          enteries.forEach(element => {
-            if (element.isFile === true) {
-              this.audioList.push({ name: element.name, url: element.toURL(), audioIsPlaying: false });
-            }
-          });
-          this.cdf.detectChanges();
-        },
+        reader.readEntries(
+          (enteries) => {
+            enteries.forEach((element) => {
+              if (element.isFile === true) {
+                this.audioList.push({
+                  name: element.name,
+                  url: element.toURL(),
+                  audioIsPlaying: false,
+                  progressBar: 0,
+                });
+              }
+            });
+            this.cdf.detectChanges();
+          },
           (err) => {
-            console.log(err)
+            console.log(err);
           }
-        )
+        );
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
   }
 
@@ -131,24 +180,23 @@ export class YarnPage {
     this.downloadRecords();
     this.audioList.map((ele, index) => {
       ele.audioIsPlaying = false;
-    })
+    });
     this.cdf.detectChanges();
   }
 
   playAudio(index, audio) {
-
     if (this.isPlayingAud == true) {
       this.isPlayingAud = false;
       this.audio.setVolume(0);
       this.audio.pause();
       this.audio.release();
-      this.cdf.detectChanges();
+      this.audioList.map((ele, indx) => {
+        ele.audioIsPlaying = false;
+        ele.progressBar = 0;
+        // this.cdf.detectChanges();
+      });
     }
     this.audio = this.media.create(audio.url);
-
-    this.audioList.map((ele, indx) => {
-      ele.audioIsPlaying = false;
-    })
 
     this.audio.play();
     this.isPlayingAud = true;
@@ -157,12 +205,25 @@ export class YarnPage {
     // Update media position every second
     var mediaTimer = setInterval(() => {
       // get media position
-      this.audio.getCurrentPosition()
+      this.audio
+        .getCurrentPosition()
         .then((response) => {
           // success callback
-          if ((Math.sign(response) == -1)) {
+          console.log(audio);
+          console.log(response);
+          audio.progressBar++;
+          this.cdf.detectChanges();
+          console.log(audio.progressBar);
+          if (audio.progressBar > 10) {
+            audio.progressBar = 0;
+            clearInterval(mediaTimer);
+            this.cdf.detectChanges();
+          }
+
+          if (Math.sign(response) == -1) {
             audio.audioIsPlaying = false;
-            // clear interval 
+            audio.progressBar = 0;
+            // clear interval
             clearInterval(mediaTimer);
             this.cdf.detectChanges();
           }
@@ -179,5 +240,35 @@ export class YarnPage {
     this.cdf.detectChanges();
     this.audio.release();
   }
-}
 
+  onLongPress(audio, i) {
+    if (this.isLongPressed && this.selectedIndex == i) {
+      this.selectedIndex = -1;
+      this.toggleYarnTitle = true;
+      this.toggleMenuOptions = false;
+      this.isLongPressed = !this.isLongPressed;
+    } else {
+      this.selectedIndex = i;
+      this.toggleYarnTitle = false;
+      this.toggleMenuOptions = true;
+      this.isLongPressed = !this.isLongPressed;
+    }
+    this.setTempSelectedAudio(audio, i);
+    this.cdf.detectChanges();
+  }
+
+  setTempSelectedAudio(audio, i) {
+    this.tempAudioEditFile = [];
+    this.tempAudioEditFile.push(audio);
+  }
+
+  editYarnVoice(event: Event) {
+    event.preventDefault();
+    this.router.navigate([
+      "/tabs/edityarn",
+      {
+        queryParams: JSON.stringify(this.tempAudioEditFile),
+      },
+    ]);
+  }
+}

@@ -1,12 +1,22 @@
+::ng-deep .top-opt {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 ::ng-deep .set-bg {
 
-    background: #edf4f7;
+    background: #8e9192;
     height: 50vh;
 
-    .play-btn {
-        display: flex;
-        align-items: center;
+    .selected-color {
+        background-color: rgb(219, 216, 216);
+    }
 
+    .nuetral-color {
+        background-color: none;
     }
 
     .play-icons {
@@ -33,7 +43,7 @@
         z-index: 2;
 
         .prog-bar {
-            width: 100%;
+            width: 80%;
         }
 
         .ply-btn {

@@ -8,7 +8,8 @@ import { YarnPageRoutingModule } from './yarn-routing.module';
 
 import { YarnPage } from './yarn.page';
 import { SharedModuleModule } from '../shared-module/shared-module.module';
-
+import { LongPressModule } from 'ionic-long-press';
+import { LongpressDirective } from '../directives/longpress.directive';
 
 
 @NgModule({
@@ -18,9 +19,10 @@ import { SharedModuleModule } from '../shared-module/shared-module.module';
     IonicModule,
     ReactiveFormsModule,
     SharedModuleModule,
-    YarnPageRoutingModule
+    YarnPageRoutingModule,
+    LongPressModule
   ],
-  declarations: [YarnPage],
+  declarations: [YarnPage, LongpressDirective],
   providers: []
 })
 export class YarnPageModule { }
