@@ -6,4 +6,16 @@
 
 <ion-content>
 
+  <audio></audio>
+  <ion-icon class="ply-btn" tappable (click)="playAudio()" name="play" *ngIf="!playClicked"></ion-icon>
+
+  <ion-icon tappable (click)="pauseAudio()" name="pause-outline" *ngIf="playClicked"> </ion-icon>
+
+  <div>
+    <canvas width="480" height="120" #canvas></canvas>
+  </div>
+  <div>
+    <span id="output-start-time">0.00 sec</span> - <span id="output-end-time">0.00 sec</span>
+  </div>
+
 </ion-content>

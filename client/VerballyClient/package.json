@@ -39,6 +39,7 @@
     "cordova-res": "^0.15.3",
     "rxjs": "~6.5.1",
     "tslib": "^1.14.1",
+    "xsound": "^2.24.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
