@@ -43,9 +43,6 @@ export class YarnPage {
   selectedIndex: number;
 
   @ViewChild("button") button: ElementRef;
-  isLongPressed = false;
-  toggleYarnTitle = true;
-  toggleMenuOptions = false;
   tempAudioEditFile = [];
 
   constructor(
@@ -241,34 +238,35 @@ export class YarnPage {
     this.audio.release();
   }
 
-  onLongPress(audio, i) {
-    if (this.isLongPressed && this.selectedIndex == i) {
-      this.selectedIndex = -1;
-      this.toggleYarnTitle = true;
-      this.toggleMenuOptions = false;
-      this.isLongPressed = !this.isLongPressed;
-    } else {
-      this.selectedIndex = i;
-      this.toggleYarnTitle = false;
-      this.toggleMenuOptions = true;
-      this.isLongPressed = !this.isLongPressed;
+  checkedYarnsForEdit($event, audio, index) {
+    if ($event.detail.checked && this.tempAudioEditFile.length == 0) {
+      this.tempAudioEditFile.push(audio);
     }
-    this.setTempSelectedAudio(audio, i);
-    this.cdf.detectChanges();
+    if (!$event.detail.checked) {
+      this.tempAudioEditFile.splice(index, 1);
+    } else {
+      this.tempAudioEditFile.map((aud) => {
+        if (aud.name == audio.name) {
+          return;
+        } else {
+          this.tempAudioEditFile.push(audio);
+        }
+      });
+    }
   }
 
-  setTempSelectedAudio(audio, i) {
-    this.tempAudioEditFile = [];
-    this.tempAudioEditFile.push(audio);
-  }
-
-  editYarnVoice(event: Event) {
+  gotoYarnEdit(event: Event) {
     event.preventDefault();
+
     this.router.navigate([
       "/tabs/edityarn",
       {
         queryParams: JSON.stringify(this.tempAudioEditFile),
       },
     ]);
+  }
+
+  ngOnDestroy() {
+    this.audioList = [];
   }
 }

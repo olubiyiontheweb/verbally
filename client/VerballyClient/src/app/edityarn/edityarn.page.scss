@@ -3,3 +3,9 @@ svg {
     cursor: ew-resize;
     background-color: #000;
 }
+
+canvas {
+    width: 100%;
+    min-width: 320px;
+    max-height: 140px;
+}

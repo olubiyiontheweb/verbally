@@ -8,7 +8,6 @@ import { YarnPageRoutingModule } from "./yarn-routing.module";
 
 import { YarnPage } from "./yarn.page";
 import { SharedModuleModule } from "../shared-module/shared-module.module";
-import { LongpressDirective } from "../directives/longpress.directive";
 
 @NgModule({
   imports: [
@@ -19,7 +18,7 @@ import { LongpressDirective } from "../directives/longpress.directive";
     SharedModuleModule,
     YarnPageRoutingModule,
   ],
-  declarations: [YarnPage, LongpressDirective],
+  declarations: [YarnPage],
   providers: [],
 })
 export class YarnPageModule {}
