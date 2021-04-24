@@ -244,15 +244,15 @@ export class YarnPage {
     }
     if (!$event.detail.checked) {
       this.tempAudioEditFile.splice(index, 1);
-    } else {
-      this.tempAudioEditFile.map((aud) => {
-        if (aud.name == audio.name) {
-          return;
-        } else {
-          this.tempAudioEditFile.push(audio);
-        }
-      });
+      return;
     }
+    this.tempAudioEditFile.map((aud) => {
+      if (aud.name == audio.name) {
+        return;
+      } else {
+        this.tempAudioEditFile.push(audio);
+      }
+    });
   }
 
   gotoYarnEdit(event: Event) {
@@ -266,7 +266,8 @@ export class YarnPage {
     ]);
   }
 
-  ngOnDestroy() {
+  ionViewWillLeave() {
     this.audioList = [];
+    this.tempAudioEditFile = [];
   }
 }

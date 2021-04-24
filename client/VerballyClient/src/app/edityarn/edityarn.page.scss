@@ -9,3 +9,19 @@ canvas {
     min-width: 320px;
     max-height: 140px;
 }
+
+.cont-flex {
+    display: flex;
+}
+
+.txt-header {
+    font-size: large;
+    font-weight: bold;
+}
+
+.ply-btn {
+    padding-right: 10px;
+    z-index: 2;
+    height: 30px;
+    width: 30px;
+}

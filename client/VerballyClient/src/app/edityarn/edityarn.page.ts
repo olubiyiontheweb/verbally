@@ -18,8 +18,9 @@ import { Howl, Howler } from "howler";
   templateUrl: "./edityarn.page.html",
   styleUrls: ["./edityarn.page.scss"],
 })
-export class EdityarnPage implements OnInit {
-  soundUrl: Array<{ name: number; url: string }> = [];
+export class EdityarnPage {
+  //soundUrl: Array<{ name: number; url: string }> = [];
+  soundUrl: Array<{}> = [];
   fileName: string;
   win: any = window;
   soundList: any = [];
@@ -35,44 +36,37 @@ export class EdityarnPage implements OnInit {
     private cdf: ChangeDetectorRef,
     public platform: Platform
   ) {
-    this.soundUrl = [];
     this.router.params.subscribe((params) => {
-      let parseSound = JSON.parse(params.queryParams);
-      this.soundUrl.push(parseSound);
-      this.setHowl(this.soundUrl);
+      this.soundUrl.push(JSON.parse(params.queryParams));
     });
   }
 
   setHowl(sound) {
-    let audioLst: any,
-      audioLstArray: any = [];
-
     this.soundList = new Howl({
-      src: [audioLstArray],
-      autoplay: true,
-      loop: true,
+      src: [sound],
+      loop: false,
       html5: true,
-      volume: 0.5,
       onend: function () {
         console.log("Finished!");
       },
     });
   }
 
-  ngOnInit() {}
-  ngOnDestroy() {
+  ionViewDidEnter() {}
+
+  ionViewWillLeave() {
     this.soundUrl = [];
-    this.soundList.stop();
+    if (this.soundList.playing()) this.soundList.stop();
   }
 
-  playAudio(): void {
+  playAudio(audioUrl): void {
+    if (this.soundList.length > 0 && this.soundList.playing())
+      this.soundList.stop();
+    this.setHowl(Capacitor.convertFileSrc(audioUrl));
     this.soundList.play();
-    // this.playClicked = !this.playClicked;
-    // this.togglePlay.next(this.playClicked);
   }
 
   pauseAudio(): void {
-    this.playClicked = !this.playClicked;
-    this.togglePlay.next(this.playClicked);
+    this.soundList.pause();
   }
 }

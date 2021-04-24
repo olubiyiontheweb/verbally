@@ -1,44 +1,48 @@
 <ion-header translucent>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/yarns"></ion-back-button>
+      <ion-back-button defaultHref="tabs/yarns"></ion-back-button>
     </ion-buttons>
     <ion-title>Edit yarns</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
+  <ion-list>
+    <div class="edit-container" *ngFor="let audios of soundUrl;">
+      <ion-item *ngFor="let audio of audios; let i = index">
 
-  <div class="edit-container" *ngFor="let audio of soundUrl; let index as i">
-    {{audio.name}}
-    <ion-item>
-      <ion-label class="ion-text-wrap flex-container" (click)="playAudio()">
-        <ion-text color="dark">
-          <h3>Play voices</h3>
-        </ion-text>
-        <ion-text color="dark p-left">
-          <ion-icon name="play-outline"></ion-icon>
-        </ion-text>
-      </ion-label>
-    </ion-item>
+        <ion-label class="ion-text-wrap" (click)="playAudio(audio.url)">
+          <div class="cont-flex">
+            <ion-text color="dark p-left">
+              <ion-icon class="ply-btn" name="play-outline"></ion-icon>
+            </ion-text>
+            <ion-text class="txt-header" color="dark">
+              {{audio.name}}
+            </ion-text>
+          </div>
+          <ion-text>
+            <ion-segment color="success">
+              <ion-segment-button checked layout="icon-bottom">
+                <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
+                <ion-label>Voice 1</ion-label>
+              </ion-segment-button>
+              <ion-segment-button layout="icon-bottom">
+                <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
+                <ion-label>Voice 2</ion-label>
+              </ion-segment-button>
+              <ion-segment-button layout="icon-bottom">
+                <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
+                <ion-label>Voice 3</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-text>
 
-    <!-- Icon bottom -->
-    <ion-segment color="success">
-      <ion-segment-button checked layout="icon-bottom">
-        <ion-icon name="musical-note-outline"></ion-icon>
-        <ion-label>Voice 1</ion-label>
-      </ion-segment-button>
-      <ion-segment-button layout="icon-bottom">
-        <ion-icon name="musical-note-outline"></ion-icon>
-        <ion-label>Voice 2</ion-label>
-      </ion-segment-button>
-      <ion-segment-button layout="icon-bottom">
-        <ion-icon name="musical-note-outline"></ion-icon>
-        <ion-label>Voice 3</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+        </ion-label>
 
-  </div>
+      </ion-item>
 
+    </div>
+  </ion-list>
 
 </ion-content>
