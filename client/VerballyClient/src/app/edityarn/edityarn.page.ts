@@ -37,6 +37,7 @@ export class EdityarnPage {
     public platform: Platform
   ) {
     this.router.params.subscribe((params) => {
+      //Remember to add some checks so that that double push is not done.
       this.soundUrl.push(JSON.parse(params.queryParams));
     });
   }
@@ -55,18 +56,30 @@ export class EdityarnPage {
   ionViewDidEnter() {}
 
   ionViewWillLeave() {
-    this.soundUrl = [];
     if (this.soundList.playing()) this.soundList.stop();
   }
 
   playAudio(audioUrl): void {
-    if (this.soundList.length > 0 && this.soundList.playing())
+    if (this.soundList.length > 0 && this.soundList.playing()) {
+      audioUrl.audioIsPlaying = false;
       this.soundList.stop();
-    this.setHowl(Capacitor.convertFileSrc(audioUrl));
-    this.soundList.play();
+    } else {
+      audioUrl.audioIsPlaying = true;
+      this.setHowl(Capacitor.convertFileSrc(audioUrl.url));
+      this.soundList.play();
+    }
   }
 
-  pauseAudio(): void {
-    this.soundList.pause();
+  pauseAudio(index, audioUrl): void {
+    audioUrl.map((audio, idx) => {
+      if (audio[index].audioIsPlaying == true) {
+        audio[index].audioIsPlaying = false;
+        this.soundList.pause();
+      }
+    });
+  }
+
+  segmentChanged(event) {
+    console.log(event);
   }
 }

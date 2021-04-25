@@ -1,7 +1,7 @@
 <ion-header translucent>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/yarns"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/yarn"></ion-back-button>
     </ion-buttons>
     <ion-title>Edit yarns</ion-title>
   </ion-toolbar>
@@ -12,26 +12,30 @@
     <div class="edit-container" *ngFor="let audios of soundUrl;">
       <ion-item *ngFor="let audio of audios; let i = index">
 
-        <ion-label class="ion-text-wrap" (click)="playAudio(audio.url)">
+        <ion-label class="ion-text-wrap">
           <div class="cont-flex">
             <ion-text color="dark p-left">
-              <ion-icon class="ply-btn" name="play-outline"></ion-icon>
+              <ion-icon class="ply-btn" name="play-outline" (click)="playAudio(audio)"
+                *ngIf="audio.audioIsPlaying == false"></ion-icon>
+              <ion-icon class="ply-btn" tappable (click)="pauseAudio(i, soundUrl)" name="pause-outline"
+                *ngIf="audio.audioIsPlaying == true">
+              </ion-icon>
             </ion-text>
             <ion-text class="txt-header" color="dark">
               {{audio.name}}
             </ion-text>
           </div>
           <ion-text>
-            <ion-segment color="success">
-              <ion-segment-button checked layout="icon-bottom">
+            <ion-segment color="success" (ionChange)="segmentChanged($event)">
+              <ion-segment-button layout="icon-bottom" value="segOne">
                 <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
                 <ion-label>Voice 1</ion-label>
               </ion-segment-button>
-              <ion-segment-button layout="icon-bottom">
+              <ion-segment-button layout="icon-bottom" value="segTwo">
                 <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
                 <ion-label>Voice 2</ion-label>
               </ion-segment-button>
-              <ion-segment-button layout="icon-bottom">
+              <ion-segment-button layout="icon-bottom" value="segThree">
                 <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
                 <ion-label>Voice 3</ion-label>
               </ion-segment-button>
