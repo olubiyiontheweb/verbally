@@ -9,42 +9,46 @@
 
 <ion-content fullscreen>
   <ion-list>
-    <div class="edit-container" *ngFor="let audios of soundUrl;">
-      <ion-item *ngFor="let audio of audios; let i = index">
+    <div class="edit-container" *ngFor="let audio of buildSoundObject;let i = index">
 
-        <ion-label class="ion-text-wrap">
-          <div class="cont-flex">
-            <ion-text color="dark p-left">
-              <ion-icon class="ply-btn" name="play-outline" (click)="playAudio(audio)"
-                *ngIf="audio.audioIsPlaying == false"></ion-icon>
-              <ion-icon class="ply-btn" tappable (click)="pauseAudio(i, soundUrl)" name="pause-outline"
-                *ngIf="audio.audioIsPlaying == true">
-              </ion-icon>
-            </ion-text>
-            <ion-text class="txt-header" color="dark">
-              {{audio.name}}
-            </ion-text>
-          </div>
-          <ion-text>
-            <ion-segment color="success" (ionChange)="segmentChanged($event)">
-              <ion-segment-button layout="icon-bottom" value="segOne">
-                <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
-                <ion-label>Voice 1</ion-label>
-              </ion-segment-button>
-              <ion-segment-button layout="icon-bottom" value="segTwo">
-                <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
-                <ion-label>Voice 2</ion-label>
-              </ion-segment-button>
-              <ion-segment-button layout="icon-bottom" value="segThree">
-                <ion-icon class="ply-btn" name="musical-note-outline"></ion-icon>
-                <ion-label>Voice 3</ion-label>
-              </ion-segment-button>
-            </ion-segment>
+      <ion-label class="ion-text-wrap">
+        <div class="cont-flex">
+          <ion-text color="dark p-left">
+            <ion-icon class="ply-btn" name="play-outline" (click)="playAudio(audio.sound)"
+              *ngIf="audio.sound.audioIsPlaying == false"></ion-icon>
+            <ion-icon class="ply-btn" tappable (click)="pauseAudio(i, audio.sound)" name="pause-outline"
+              *ngIf="audio.sound.audioIsPlaying == true">
+            </ion-icon>
           </ion-text>
+          <ion-text class="txt-header" color="dark">
+            <div>{{audio.sound.name}}</div>
+            <div>
+              <ion-icon name="time-outline"></ion-icon> {{soundDuration}}
+            </div>
+          </ion-text>
+          <ion-text class="txt-header" color="dark">
+          </ion-text>
+        </div>
+        <ion-text>
+          <ion-segment color="success" (ionChange)="playSequences($event, audio.sound.url)">
+            <ion-segment-button layout="icon-bottom" value="{{audio.sequences[0]}}">
+              <ion-label>yarn 1</ion-label>
+              <ion-icon name="timer-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button layout="icon-bottom" value="{{audio.sequences[1]}}">
+              <ion-label>yarn 2</ion-label>
+              <ion-icon name="timer-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button layout="icon-bottom" value="{{audio.sequences[3]}}">
+              <ion-label>yarn 3</ion-label>
+              <ion-icon name="timer-outline"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-text>
 
-        </ion-label>
+      </ion-label>
 
-      </ion-item>
+
 
     </div>
   </ion-list>

@@ -19,12 +19,12 @@ import { Howl, Howler } from "howler";
   styleUrls: ["./edityarn.page.scss"],
 })
 export class EdityarnPage {
-  //soundUrl: Array<{ name: number; url: string }> = [];
   soundUrl: Array<{}> = [];
   fileName: string;
   win: any = window;
   soundList: any = [];
-  public playClicked: boolean = false;
+  soundDuration: number = 0;
+  buildSoundObject = [];
 
   togglePlay: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -47,16 +47,43 @@ export class EdityarnPage {
       src: [sound],
       loop: false,
       html5: true,
+      onload: function () {
+        this.soundDuration = this._duration;
+      },
       onend: function () {
         console.log("Finished!");
+        console.log(this);
       },
     });
   }
 
-  ionViewDidEnter() {}
+  ionViewDidEnter() {
+    this.buildSoundObject = [];
+    this.soundUrl.map((value) => {
+      if (<any>value) {
+        const soundLength = (<any>value).length;
+        for (let i = 0; i < soundLength; i++) {
+          this.buildSoundObject.push({
+            sequences: [
+              [0, 20],
+              [20, 40],
+              [40, 60],
+            ],
+            sound: {
+              name: value[i].name,
+              url: value[i].url,
+              audioIsPlaying: value[i].audioIsPlaying,
+              progressBar: value[i].progressBar,
+            },
+          });
+        }
+      }
+    });
+  }
 
   ionViewWillLeave() {
-    if (this.soundList.playing()) this.soundList.stop();
+    if (this.soundList.length > 0) this.soundList.stop();
+    this.soundUrl = [];
   }
 
   playAudio(audioUrl): void {
@@ -70,6 +97,26 @@ export class EdityarnPage {
     }
   }
 
+  playSequences(event, url): void {
+    var sList = new Howl({
+      src: [Capacitor.convertFileSrc(url)],
+      html5: true,
+      sprite: {
+        sq: [event.detail.value],
+      },
+      spriteMap: {
+        sprite0: "sq",
+      },
+    });
+    console.log(event.detail.value);
+    console.log(url);
+    // sList.play("sq");
+    // Clear listener after first call.
+    sList.once("play", function () {
+      sList.play("sq");
+    });
+  }
+
   pauseAudio(index, audioUrl): void {
     audioUrl.map((audio, idx) => {
       if (audio[index].audioIsPlaying == true) {
@@ -79,7 +126,7 @@ export class EdityarnPage {
     });
   }
 
-  segmentChanged(event) {
-    console.log(event);
+  segmentChanged() {
+    console.log();
   }
 }
